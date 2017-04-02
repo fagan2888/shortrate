@@ -1,0 +1,1266 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>API Documentation &mdash; Shortrate alpha documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="author" title="About these documents"
+              href="about.html"/>
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="Shortrate alpha documentation" href="index.html"/>
+        <link rel="next" title="Releases" href="releases.html"/>
+        <link rel="prev" title="Tutorial" href="tutorials.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Shortrate
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="starting.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#risk-factor-modeling">Risk Factor Modeling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#market-risk-factors">Market Risk Factors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-hull-white-model">The Hull White Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#multi-currency-hull-white-model-extension">Multi Currency Hull White Model Extension</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="releases.html">Releases</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Shortrate</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>API Documentation</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/api.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="api-documentation">
+<h1>API Documentation<a class="headerlink" href="#api-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<div class="section" id="risk-factor-modeling">
+<h2>Risk Factor Modeling<a class="headerlink" href="#risk-factor-modeling" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#risk_factor_model.RiskFactor" title="risk_factor_model.RiskFactor"><code class="xref py py-obj docutils literal"><span class="pre">risk_factor_model.RiskFactor</span></code></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#risk_factor_model.RiskFactorModel" title="risk_factor_model.RiskFactorModel"><code class="xref py py-obj docutils literal"><span class="pre">risk_factor_model.RiskFactorModel</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">param inner_factor:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">parameter object which is modeled by the risk factor model</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#risk_factor_model.RiskFactorState" title="risk_factor_model.RiskFactorState"><code class="xref py py-obj docutils literal"><span class="pre">risk_factor_model.RiskFactorState</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">param list() value:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#risk_factor_model.RiskFactorProducer" title="risk_factor_model.RiskFactorProducer"><code class="xref py py-obj docutils literal"><span class="pre">risk_factor_model.RiskFactorProducer</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">param RiskFactorModel process:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#risk_factor_model.MultiRiskFactorProducer" title="risk_factor_model.MultiRiskFactorProducer"><code class="xref py py-obj docutils literal"><span class="pre">risk_factor_model.MultiRiskFactorProducer</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">param list(RiskFactorModel) process_list:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#risk_factor_model.RiskFactorConsumer" title="risk_factor_model.RiskFactorConsumer"><code class="xref py py-obj docutils literal"><span class="pre">risk_factor_model.RiskFactorConsumer</span></code></a></td>
+<td>consumer of RiskFactorState</td>
+</tr>
+</tbody>
+</table>
+<img src="_images/inheritance-dd4f610fd1c7373033ef10e6fd6929ce3d2a5f86.png" alt="Inheritance diagram of risk_factor_model" usemap="#inheritancefc8c32b914" class="inheritance"/>
+<map id="inheritancefc8c32b914" name="inheritancefc8c32b914">
+<area shape="rect" id="node1" href="#risk_factor_model.MultiRiskFactorProducer" target="_top" title="risk_factor_model.MultiRiskFactorProducer" alt="" coords="627,111,765,123"/>
+<area shape="rect" id="node2" title="class implementing general correlated Gauss process between grid dates" alt="" coords="399,111,603,123"/>
+<area shape="rect" id="node3" href="#risk_factor_model.RiskFactor" target="_top" title="RiskFactor" alt="" coords="29,51,127,63"/>
+<area shape="rect" id="node6" href="#risk_factor_model.RiskFactorModel" target="_top" title="RiskFactorModel" alt="" coords="219,57,334,69"/>
+<area shape="rect" id="node4" href="#risk_factor_model.RiskFactorConsumer" target="_top" title="consumer of RiskFactorState" alt="" coords="437,27,565,39"/>
+<area shape="rect" id="node5" title="QuietConsumer returns nothing, since QuietConsumer does simply not populate result in finalize_path()" alt="" coords="215,27,337,39"/>
+<area shape="rect" id="node8" href="#risk_factor_model.RiskFactorProducer" target="_top" title="risk_factor_model.RiskFactorProducer" alt="" coords="439,87,563,99"/>
+<area shape="rect" id="node9" title="class implementing general Gauss process between grid dates" alt="" coords="177,87,375,99"/>
+<area shape="rect" id="node10" href="#risk_factor_model.RiskFactorState" target="_top" title="RiskFactorState" alt="" coords="220,3,333,15"/>
+<area shape="rect" id="node11" title="simulation state" alt="" coords="39,3,117,15"/>
+<area shape="rect" id="node12" title="base class for simulation consumers" alt="" coords="31,27,125,39"/>
+<area shape="rect" id="node13" title="abstract class implementing simple producer for a model between grid dates" alt="" coords="33,99,123,111"/>
+</map>
+<span class="target" id="module-risk_factor_model"></span><dl class="class">
+<dt id="risk_factor_model.MultiRiskFactorProducer">
+<em class="property">class </em><code class="descclassname">risk_factor_model.</code><code class="descname">MultiRiskFactorProducer</code><span class="sig-paren">(</span><em>process_list</em>, <em>correlation=None</em>, <em>diffusion_driver=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/risk_factor_model.html#MultiRiskFactorProducer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#risk_factor_model.MultiRiskFactorProducer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">timewave.stochasticproducer.CorrelatedGaussEvolutionProducer</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>process_list</strong> (<em>list</em><em>(</em><a class="reference internal" href="#risk_factor_model.RiskFactorModel" title="risk_factor_model.RiskFactorModel"><em>RiskFactorModel</em></a><em>)</em><em></em>) &#8211; </li>
+<li><strong>correlation</strong> (<em>list</em><em>(</em><em>list</em><em>(</em><em>float</em><em>)</em><em></em><em>) or </em><em>dict</em><em>(</em><em></em><em>(</em><a class="reference internal" href="#risk_factor_model.RiskFactorModel" title="risk_factor_model.RiskFactorModel"><em>RiskFactorModel</em></a><em>, </em><a class="reference internal" href="#risk_factor_model.RiskFactorModel" title="risk_factor_model.RiskFactorModel"><em>RiskFactorModel</em></a><em>)</em><em>: float</em><em>)</em><em></em>) &#8211; correlation of diffusion drivers of risk factors</li>
+<li><strong>diffusion_driver</strong> (<em>list</em><em>(</em><a class="reference internal" href="#risk_factor_model.RiskFactorModel" title="risk_factor_model.RiskFactorModel"><em>RiskFactorModel</em></a><em>)</em><em></em>) &#8211; index of diffusion driver
+if correlation is given by simple matrix (list(list(float)))</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>initialize MultiRiskFactorProducer</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="risk_factor_model.RiskFactor">
+<em class="property">class </em><code class="descclassname">risk_factor_model.</code><code class="descname">RiskFactor</code><a class="reference internal" href="_modules/risk_factor_model.html#RiskFactor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#risk_factor_model.RiskFactor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="risk_factor_model.RiskFactor.inner_factor">
+<code class="descname">inner_factor</code><a class="headerlink" href="#risk_factor_model.RiskFactor.inner_factor" title="Permalink to this definition">¶</a></dt>
+<dd><p>RiskFactor typically move given data structure like yield curves, fx curves or volatility surfaces.
+The inner factor is the driven structure.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="risk_factor_model.RiskFactor.pre_calculate">
+<code class="descname">pre_calculate</code><span class="sig-paren">(</span><em>s</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/risk_factor_model.html#RiskFactor.pre_calculate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#risk_factor_model.RiskFactor.pre_calculate" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>s</strong> (<em>BusinessDate</em>) &#8211; start date pre calc step</li>
+<li><strong>e</strong> (<em>BusinessDate</em>) &#8211; end date pre calc step</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>pre calculation depending only on dates and model data</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="risk_factor_model.RiskFactor.set_risk_factor">
+<code class="descname">set_risk_factor</code><span class="sig-paren">(</span><em>factor_date</em>, <em>factor_value=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/risk_factor_model.html#RiskFactor.set_risk_factor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#risk_factor_model.RiskFactor.set_risk_factor" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>factor_date</strong> (<em>BusinessDate</em>) &#8211; </li>
+<li><strong>or tuple factor_value</strong> (<em>float</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>sets risk factor state, method should be idempotent,
+i.e. setting same state twice must not change risk factor state at all</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="risk_factor_model.RiskFactorConsumer">
+<em class="property">class </em><code class="descclassname">risk_factor_model.</code><code class="descname">RiskFactorConsumer</code><span class="sig-paren">(</span><em>*risk_factor_list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/risk_factor_model.html#RiskFactorConsumer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#risk_factor_model.RiskFactorConsumer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">timewave.consumers.QuietConsumer</span></code></p>
+<p>consumer of RiskFactorState</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>risk_factor_list</strong> (<em>list</em><em>(</em><a class="reference internal" href="#risk_factor_model.RiskFactor" title="risk_factor_model.RiskFactor"><em>RiskFactor</em></a><em>)</em><em></em>) &#8211; list of risk factors which will be driven by risk factor state</td>
+</tr>
+</tbody>
+</table>
+<p>initialize RiskFactorConsumer</p>
+<dl class="method">
+<dt id="risk_factor_model.RiskFactorConsumer.consume">
+<code class="descname">consume</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/risk_factor_model.html#RiskFactorConsumer.consume"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#risk_factor_model.RiskFactorConsumer.consume" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>state</strong> (<a class="reference internal" href="#risk_factor_model.RiskFactorState" title="risk_factor_model.RiskFactorState"><em>RiskFactorState</em></a>) &#8211; specific process state</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return object:</th><td class="field-body">the new consumer state</td>
+</tr>
+</tbody>
+</table>
+<p>returns pair
+the first element is the list of updated simulated hw curves
+the second element is True (indicates Curve mapping)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="risk_factor_model.RiskFactorConsumer.finalize">
+<code class="descname">finalize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/risk_factor_model.html#RiskFactorConsumer.finalize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#risk_factor_model.RiskFactorConsumer.finalize" title="Permalink to this definition">¶</a></dt>
+<dd><p>finalize RiskFactorConsumer</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="risk_factor_model.RiskFactorConsumer.initialize">
+<code class="descname">initialize</code><span class="sig-paren">(</span><em>grid=None</em>, <em>num_of_paths=None</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/risk_factor_model.html#RiskFactorConsumer.initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#risk_factor_model.RiskFactorConsumer.initialize" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>grid</strong> (<em>list</em><em>(</em><em>BusinessDate</em><em>)</em><em></em>) &#8211; list of Monte Carlo grid dates</li>
+<li><strong>num_of_paths</strong> (<em>int</em>) &#8211; number of simulation path</li>
+<li><strong>seed</strong> (<em>hashable</em>) &#8211; initial seed of random generators</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>sets pre calculation depending only on grid</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="risk_factor_model.RiskFactorConsumer.initialize_path">
+<code class="descname">initialize_path</code><span class="sig-paren">(</span><em>path_num=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/risk_factor_model.html#RiskFactorConsumer.initialize_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#risk_factor_model.RiskFactorConsumer.initialize_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>initialize RiskFactorConsumer for path</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="risk_factor_model.RiskFactorConsumer.start_date">
+<code class="descname">start_date</code><em class="property"> = None</em><a class="headerlink" href="#risk_factor_model.RiskFactorConsumer.start_date" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>BusinessDate</em> &#8211; valuation date</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="risk_factor_model.RiskFactorModel">
+<em class="property">class </em><code class="descclassname">risk_factor_model.</code><code class="descname">RiskFactorModel</code><span class="sig-paren">(</span><em>inner_factor</em>, <em>start_value=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/risk_factor_model.html#RiskFactorModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#risk_factor_model.RiskFactorModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">timewave.stochasticprocess.StochasticProcess</span></code>, <a class="reference internal" href="#risk_factor_model.RiskFactor" title="risk_factor_model.RiskFactor"><code class="xref py py-class docutils literal"><span class="pre">risk_factor_model.RiskFactor</span></code></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>inner_factor</strong> (<em>Curve</em><em> or </em><em>Volatility</em><em> or </em><em>object</em>) &#8211; parameter object which is modeled by the risk factor model</li>
+<li><strong>start_value</strong> (<em>float</em><em> or </em><em>tuple</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>initialize risk factor model</p>
+<dl class="method">
+<dt id="risk_factor_model.RiskFactorModel.evolve">
+<code class="descname">evolve</code><span class="sig-paren">(</span><em>x</em>, <em>s</em>, <em>e</em>, <em>q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/risk_factor_model.html#RiskFactorModel.evolve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#risk_factor_model.RiskFactorModel.evolve" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> (<em>float</em>) &#8211; current state value, i.e. value before evolution step</li>
+<li><strong>s</strong> (<em>BusinessDate</em>) &#8211; current point in time, i.e. start point of next evolution step</li>
+<li><strong>e</strong> (<em>BusinessDate</em>) &#8211; next point in time, i.e. end point of evolution step</li>
+<li><strong>q</strong> (<em>float</em>) &#8211; standard normal random number to do step</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return float:</th><td class="field-body"><p class="first last">next state value, i.e. value after evolution step</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>evolves process state <cite>x</cite> from <cite>s</cite> to <cite>e</cite> in time depending of standard normal random variable <cite>q</cite></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="risk_factor_model.RiskFactorModel.evolve_risk_factor">
+<code class="descname">evolve_risk_factor</code><span class="sig-paren">(</span><em>x</em>, <em>s</em>, <em>e</em>, <em>q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/risk_factor_model.html#RiskFactorModel.evolve_risk_factor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#risk_factor_model.RiskFactorModel.evolve_risk_factor" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> (<em>float</em>) &#8211; current state value, i.e. value before evolution step</li>
+<li><strong>s</strong> (<em>BusinessDate</em>) &#8211; current point in time, i.e. start point of next evolution step</li>
+<li><strong>e</strong> (<em>BusinessDate</em>) &#8211; next point in time, i.e. end point of evolution step</li>
+<li><strong>q</strong> (<em>float</em>) &#8211; standard normal random number to do step</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return float:</th><td class="field-body"><p class="first last">next state value, i.e. value after evolution step</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>evolves process state <cite>x</cite> from <cite>s</cite> to <cite>e</cite> in time depending of standard normal random variable <cite>q</cite>
+and sets risk factor at <cite>e</cite> to <cite>x</cite> after evolving from <cite>s</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="risk_factor_model.RiskFactorModel.get_numeraire">
+<code class="descname">get_numeraire</code><span class="sig-paren">(</span><em>value_date</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/risk_factor_model.html#RiskFactorModel.get_numeraire"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#risk_factor_model.RiskFactorModel.get_numeraire" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value_date</strong> (<em>BusinessDate</em>) &#8211; date of</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return float:</th><td class="field-body">returns the numeraire value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="risk_factor_model.RiskFactorModel.pre_calculate">
+<code class="descname">pre_calculate</code><span class="sig-paren">(</span><em>s</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/risk_factor_model.html#RiskFactorModel.pre_calculate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#risk_factor_model.RiskFactorModel.pre_calculate" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>s</strong> (<em>BusinessDate</em>) &#8211; start date pre calc step</li>
+<li><strong>e</strong> (<em>BusinessDate</em>) &#8211; end date pre calc step</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>pre calculation depending only on dates and model data
+(RiskFactor method)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="risk_factor_model.RiskFactorModel.set_risk_factor">
+<code class="descname">set_risk_factor</code><span class="sig-paren">(</span><em>factor_date</em>, <em>factor_value=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/risk_factor_model.html#RiskFactorModel.set_risk_factor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#risk_factor_model.RiskFactorModel.set_risk_factor" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>factor_date</strong> (<em>BusinessDate</em>) &#8211; sets risk factor state at this date</li>
+<li><strong>factor_value</strong> (<em>float</em><em> or </em><em>tuple</em>) &#8211; sets risk factor state to this value</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>sets risk factor state, method should be idempotent,
+i.e. setting same state twice must not change risk factor state at all
+(RiskFactor method)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="risk_factor_model.RiskFactorProducer">
+<em class="property">class </em><code class="descclassname">risk_factor_model.</code><code class="descname">RiskFactorProducer</code><span class="sig-paren">(</span><em>process</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/risk_factor_model.html#RiskFactorProducer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#risk_factor_model.RiskFactorProducer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">timewave.stochasticproducer.GaussEvolutionFunctionProducer</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>process</strong> (<a class="reference internal" href="#risk_factor_model.RiskFactorModel" title="risk_factor_model.RiskFactorModel"><em>RiskFactorModel</em></a>) &#8211; </td>
+</tr>
+</tbody>
+</table>
+<p>producer for <cite>timewave</cite> simulation framework to evolve a RiskFactorModel
+depending of standard normal random values</p>
+<dl class="method">
+<dt id="risk_factor_model.RiskFactorProducer.initialize">
+<code class="descname">initialize</code><span class="sig-paren">(</span><em>grid=None</em>, <em>num_of_paths=None</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/risk_factor_model.html#RiskFactorProducer.initialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#risk_factor_model.RiskFactorProducer.initialize" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>grid</strong> (<em>list</em><em>(</em><em>BusinessDate</em><em>)</em><em></em>) &#8211; list of Monte Carlo grid dates</li>
+<li><strong>num_of_paths</strong> (<em>int</em>) &#8211; number of simulation path</li>
+<li><strong>seed</strong> (<em>hashable</em>) &#8211; initial seed of random generators</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>sets pre calculation depending only on grid</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="risk_factor_model.RiskFactorProducer.initialize_path">
+<code class="descname">initialize_path</code><span class="sig-paren">(</span><em>path_num=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/risk_factor_model.html#RiskFactorProducer.initialize_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#risk_factor_model.RiskFactorProducer.initialize_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>initialize RiskFactorConsumer for path</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="risk_factor_model.RiskFactorState">
+<em class="property">class </em><code class="descclassname">risk_factor_model.</code><code class="descname">RiskFactorState</code><span class="sig-paren">(</span><em>value=[]</em>, <em>numeraire_value=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/risk_factor_model.html#RiskFactorState"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#risk_factor_model.RiskFactorState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">timewave.engine.State</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>value</strong> (<em>list</em><em>(</em><em></em><em>)</em><em></em>) &#8211; </li>
+<li><strong>numeraire_value</strong> (<em>float</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>inits RiskFactorState</p>
+</dd></dl>
+
+</div>
+<div class="section" id="market-risk-factors">
+<h2>Market Risk Factors<a class="headerlink" href="#market-risk-factors" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#market_risk_factor.BrownianZeroRateCurve" title="market_risk_factor.BrownianZeroRateCurve"><code class="xref py py-obj docutils literal"><span class="pre">market_risk_factor.BrownianZeroRateCurve</span></code></a></td>
+<td>simple Brownian motion rate diffusion</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#market_risk_factor.GBMFxCurve" title="market_risk_factor.GBMFxCurve"><code class="xref py py-obj docutils literal"><span class="pre">market_risk_factor.GBMFxCurve</span></code></a></td>
+<td>models fx spot rate as spot * x</td>
+</tr>
+</tbody>
+</table>
+<img src="_images/inheritance-b10f756a64c4df1f045fab8bd850242f0fa84a62.png" alt="Inheritance diagram of market_risk_factor" usemap="#inheritance7a7fc4d75f" class="inheritance"/>
+<map id="inheritance7a7fc4d75f" name="inheritance7a7fc4d75f">
+<area shape="rect" id="node5" title="fx rate curve for currency pair" alt="" coords="330,30,392,44"/>
+<area shape="rect" id="node6" href="#market_risk_factor.BrownianZeroRateCurve" target="_top" title="simple Brownian motion rate diffusion" alt="" coords="605,31,765,45"/>
+<area shape="rect" id="node8" href="#market_risk_factor.GBMFxCurve" target="_top" title="models fx spot rate as spot * x" alt="" coords="454,30,577,44"/>
+<area shape="rect" id="node7" href="#risk_factor_model.RiskFactorModel" target="_top" title="RiskFactorModel" alt="" coords="295,59,427,72"/>
+<area shape="rect" id="node9" href="#risk_factor_model.RiskFactor" target="_top" title="RiskFactor" alt="" coords="127,45,237,59"/>
+</map>
+<span class="target" id="module-market_risk_factor"></span><dl class="class">
+<dt id="market_risk_factor.BrownianZeroRateCurve">
+<em class="property">class </em><code class="descclassname">market_risk_factor.</code><code class="descname">BrownianZeroRateCurve</code><span class="sig-paren">(</span><em>x_list=None</em>, <em>y_list=None</em>, <em>y_inter=None</em>, <em>origin=None</em>, <em>day_count=None</em>, <em>forward_tenor=None</em>, <em>drift=0.0</em>, <em>volatility=0.0</em>, <em>inner_factor=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/market_risk_factor.html#BrownianZeroRateCurve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#market_risk_factor.BrownianZeroRateCurve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dcf.curve.ZeroRateCurve</span></code>, <a class="reference internal" href="#risk_factor_model.RiskFactorModel" title="risk_factor_model.RiskFactorModel"><code class="xref py py-class docutils literal"><span class="pre">risk_factor_model.RiskFactorModel</span></code></a></p>
+<p>simple Brownian motion rate diffusion</p>
+<p>initializes Hull White curve</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>x_list</strong> (<em>list</em><em>(</em><em>float</em><em>)</em><em></em>) &#8211; </li>
+<li><strong>y_list</strong> (<em>list</em><em>(</em><em>float</em><em>)</em><em></em>) &#8211; </li>
+<li><strong>y_inter</strong> (<em>list</em><em>(</em><em>interpolation</em><em>)</em><em></em>) &#8211; </li>
+<li><strong>origin</strong> (<em>BusinessDate</em>) &#8211; </li>
+<li><strong>day_count</strong> (<em>DayCount</em>) &#8211; </li>
+<li><strong>forward_tenor</strong> (<em>BusinessPeriod</em>) &#8211; </li>
+<li><strong>or function drift</strong> (<em>float</em>) &#8211; </li>
+<li><strong>or function volatility</strong> (<em>float</em>) &#8211; </li>
+<li><strong>inner_factor</strong> (<em>RateCurve</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="classmethod">
+<dt id="market_risk_factor.BrownianZeroRateCurve.cast">
+<em class="property">classmethod </em><code class="descname">cast</code><span class="sig-paren">(</span><em>other</em>, <em>drift=0.0</em>, <em>volatility=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/market_risk_factor.html#BrownianZeroRateCurve.cast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#market_risk_factor.BrownianZeroRateCurve.cast" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="market_risk_factor.BrownianZeroRateCurve.evolve">
+<code class="descname">evolve</code><span class="sig-paren">(</span><em>x</em>, <em>s</em>, <em>e</em>, <em>q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/market_risk_factor.html#BrownianZeroRateCurve.evolve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#market_risk_factor.BrownianZeroRateCurve.evolve" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="market_risk_factor.BrownianZeroRateCurve.get_zero_rate">
+<code class="descname">get_zero_rate</code><span class="sig-paren">(</span><em>start</em>, <em>stop</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/market_risk_factor.html#BrownianZeroRateCurve.get_zero_rate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#market_risk_factor.BrownianZeroRateCurve.get_zero_rate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="market_risk_factor.GBMFxCurve">
+<em class="property">class </em><code class="descclassname">market_risk_factor.</code><code class="descname">GBMFxCurve</code><span class="sig-paren">(</span><em>x_list=None</em>, <em>y_list=None</em>, <em>y_inter=None</em>, <em>origin=None</em>, <em>day_count=None</em>, <em>domestic_curve=None</em>, <em>foreign_curve=None</em>, <em>volatility=0.0</em>, <em>inner_factor=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/market_risk_factor.html#GBMFxCurve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#market_risk_factor.GBMFxCurve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dcf.fx.FxCurve</span></code>, <a class="reference internal" href="#risk_factor_model.RiskFactorModel" title="risk_factor_model.RiskFactorModel"><code class="xref py py-class docutils literal"><span class="pre">risk_factor_model.RiskFactorModel</span></code></a></p>
+<p>models fx spot rate as spot * x</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>x_list</strong> (<em>list</em><em>(</em><em>BusinessDate</em><em>)</em><em></em>) &#8211; </li>
+<li><strong>y_list</strong> (<em>list</em><em>(</em><em>BusinessDate</em><em>)</em><em></em>) &#8211; </li>
+<li><strong>y_inter</strong> (<em>list</em><em>(</em><em></em><em>)</em><em></em>) &#8211; </li>
+<li><strong>origin</strong> (<em>BusinessDate</em>) &#8211; </li>
+<li><strong>day_count</strong> (<em>DayCount</em>) &#8211; </li>
+<li><strong>domestic_curve</strong> (<em>RateCurve</em>) &#8211; </li>
+<li><strong>foreign_curve</strong> (<em>RateCurve</em>) &#8211; </li>
+<li><strong>or function volatility</strong> (<em>float</em>) &#8211; </li>
+<li><strong>inner_factor</strong> (<em>FxCurve</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="classmethod">
+<dt id="market_risk_factor.GBMFxCurve.cast">
+<em class="property">classmethod </em><code class="descname">cast</code><span class="sig-paren">(</span><em>other</em>, <em>volatility=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/market_risk_factor.html#GBMFxCurve.cast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#market_risk_factor.GBMFxCurve.cast" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>other</strong> (<em>FxCurve</em>) &#8211; FxCurve to retrieve factor expectation</li>
+<li><strong>or function</strong><strong> or </strong><strong>Curve volatility</strong> (<em>float</em>) &#8211; fx rate volatility</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="market_risk_factor.GBMFxCurve.evolve">
+<code class="descname">evolve</code><span class="sig-paren">(</span><em>x</em>, <em>s</em>, <em>e</em>, <em>q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/market_risk_factor.html#GBMFxCurve.evolve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#market_risk_factor.GBMFxCurve.evolve" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="market_risk_factor.GBMFxCurve.get_fx_rate">
+<code class="descname">get_fx_rate</code><span class="sig-paren">(</span><em>value_date</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/market_risk_factor.html#GBMFxCurve.get_fx_rate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#market_risk_factor.GBMFxCurve.get_fx_rate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="the-hull-white-model">
+<h2>The Hull White Model<a class="headerlink" href="#the-hull-white-model" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#hullwhite_model.HullWhiteCurve" title="hullwhite_model.HullWhiteCurve"><code class="xref py py-obj docutils literal"><span class="pre">hullwhite_model.HullWhiteCurve</span></code></a></td>
+<td>calculation of discount factors in the Hull White model</td>
+</tr>
+</tbody>
+</table>
+<img src="_images/inheritance-86d303e44e3eb065f53ddfa302963f35e5aac602.png" alt="Inheritance diagram of hullwhite_model" usemap="#inheritanceb141bf8f80" class="inheritance"/>
+<map id="inheritanceb141bf8f80" name="inheritanceb141bf8f80">
+<area shape="rect" id="node5" href="#hullwhite_model.HullWhiteCurve" target="_top" title="calculation of discount factors in the Hull White model" alt="" coords="629,19,765,34"/>
+<area shape="rect" id="node6" href="#risk_factor_model.RiskFactorModel" target="_top" title="RiskFactorModel" alt="" coords="451,34,598,49"/>
+<area shape="rect" id="node7" href="#risk_factor_model.RiskFactor" target="_top" title="RiskFactor" alt="" coords="263,34,387,49"/>
+</map>
+<span class="target" id="module-hullwhite_model"></span><dl class="class">
+<dt id="hullwhite_model.HullWhiteCurve">
+<em class="property">class </em><code class="descclassname">hullwhite_model.</code><code class="descname">HullWhiteCurve</code><span class="sig-paren">(</span><em>x_list=None</em>, <em>y_list=None</em>, <em>y_inter=None</em>, <em>origin=None</em>, <em>day_count=None</em>, <em>forward_tenor=None</em>, <em>mean_reversion=0.0</em>, <em>volatility=0.0</em>, <em>terminal_date=None</em>, <em>inner_factor=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hullwhite_model.html#HullWhiteCurve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hullwhite_model.HullWhiteCurve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">dcf.curve.ZeroRateCurve</span></code>, <a class="reference internal" href="#risk_factor_model.RiskFactorModel" title="risk_factor_model.RiskFactorModel"><code class="xref py py-class docutils literal"><span class="pre">risk_factor_model.RiskFactorModel</span></code></a></p>
+<p>calculation of discount factors in the Hull White model</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>x_list</strong> (<em>list</em><em>(</em><em>float</em><em>)</em><em></em>) &#8211; </li>
+<li><strong>y_list</strong> (<em>list</em><em>(</em><em>float</em><em>)</em><em></em>) &#8211; </li>
+<li><strong>y_inter</strong> (<em>list</em><em>(</em><em>interpolation</em><em>)</em><em></em>) &#8211; </li>
+<li><strong>origin</strong> (<em>BusinessDate</em>) &#8211; </li>
+<li><strong>day_count</strong> (<em>DayCount</em>) &#8211; </li>
+<li><strong>forward_tenor</strong> (<em>BusinessPeriod</em>) &#8211; standard forward</li>
+<li><strong>mean_reversion</strong> (<em>float</em><em> or </em><em>function</em>) &#8211; mean reversion speed of short rate process</li>
+<li><strong>volatility</strong> (<em>float</em><em> or </em><em>function</em>) &#8211; short rate volatility</li>
+<li><strong>terminal_date</strong> (<em>BusinessDate</em>) &#8211; date of terminal measure</li>
+<li><strong>inner_factor</strong> (<em>RateCurve</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>initializes Hull White curve</p>
+<dl class="method">
+<dt id="hullwhite_model.HullWhiteCurve.calc_integral_B">
+<code class="descname">calc_integral_B</code><span class="sig-paren">(</span><em>t1</em>, <em>t2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hullwhite_model.html#HullWhiteCurve.calc_integral_B"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hullwhite_model.HullWhiteCurve.calc_integral_B" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the value of the helper function B</p>
+<div class="math">
+\[B(t_1, t_2) = \int_{t_1}^{t_2} I_1(t_1, \tau)  \,
+\mathrm{d}\tau = \frac{1}{a}\Big(1 - \mathrm{e}^{-a(t_2 - t_1)}\Big)\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>t1</strong> (<em>float</em>) &#8211; start time as year fraction / float</li>
+<li><strong>t2</strong> (<em>float</em>) &#8211; end time as year fraction / float</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return float:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="hullwhite_model.HullWhiteCurve.calc_integral_I1">
+<code class="descname">calc_integral_I1</code><span class="sig-paren">(</span><em>t1</em>, <em>t2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hullwhite_model.html#HullWhiteCurve.calc_integral_I1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hullwhite_model.HullWhiteCurve.calc_integral_I1" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>t1</strong> (<em>float</em>) &#8211; start time as year fraction / float</li>
+<li><strong>t2</strong> (<em>float</em>) &#8211; end time as year fraction / float</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>returns the value of the helper function I1</p>
+<div class="math">
+\[I_1(t_1, t_2) = \exp
+\left( -\int_{t_1}^{t_2} a(\tau) \,\mathrm{d}\tau \right) = \mathrm{e}^{-a(t_2 - t_1)}\]</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="hullwhite_model.HullWhiteCurve.calc_integral_I1_squared">
+<code class="descname">calc_integral_I1_squared</code><span class="sig-paren">(</span><em>t1</em>, <em>t2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hullwhite_model.html#HullWhiteCurve.calc_integral_I1_squared"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hullwhite_model.HullWhiteCurve.calc_integral_I1_squared" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>t1</strong> (<em>float</em>) &#8211; start time as year fraction / float</li>
+<li><strong>t2</strong> (<em>float</em>) &#8211; end time as year fraction / float</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return float:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<p>returns the value of the helper function I1^2</p>
+<div class="math">
+\[I_1(t_1, t_2)^2 = \exp
+\left( -2\int_{t_1}^{t_2} a(\tau) \,\mathrm{d}\tau \right) = \mathrm{e}^{-2a(t_2 - t_1)}\]</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="hullwhite_model.HullWhiteCurve.calc_integral_I2">
+<code class="descname">calc_integral_I2</code><span class="sig-paren">(</span><em>s</em>, <em>t</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hullwhite_model.html#HullWhiteCurve.calc_integral_I2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hullwhite_model.HullWhiteCurve.calc_integral_I2" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>s</strong> (<em>float</em>) &#8211; start time as year fraction / float</li>
+<li><strong>t</strong> (<em>float</em>) &#8211; end time as year fraction / float</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return float:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<p>returns the value of the helper function Integrals</p>
+<p>One of the deterministic terms of a step in the MC simulation is calculated here
+with last observation date for T-Bond numeraire T</p>
+<div class="math">
+\[\int_s^t \sigma^2(u) I_1(u,t) (B(u,t)-B(u,T)) \,\mathrm{d} u +
+B(s,t)I_1(s,t)\int_0^s \sigma^2(u) I_1^2(u,s)\,\mathrm{d}u\]</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="hullwhite_model.HullWhiteCurve.calc_integral_volatility_squared_with_I1">
+<code class="descname">calc_integral_volatility_squared_with_I1</code><span class="sig-paren">(</span><em>t1</em>, <em>t2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hullwhite_model.html#HullWhiteCurve.calc_integral_volatility_squared_with_I1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hullwhite_model.HullWhiteCurve.calc_integral_volatility_squared_with_I1" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>t1</strong> &#8211; </li>
+<li><strong>t2</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return float:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<p>Calculates integral of integrand <span class="math">\(f\)</span> with <span class="math">\(I_1\)</span>
+between two time points <span class="math">\(t_1\)</span> and <span class="math">\(t_2\)</span> with
+<span class="math">\(t_1 \le t_2\)</span> is as:</p>
+<div class="math">
+\[extrm{Var}_r(t_1,t_2) =  \int_{t_1}^{t_2} vol(u)^2 I_1(u,t_2) \,\mathrm{d} u\]</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="hullwhite_model.HullWhiteCurve.calc_integral_volatility_squared_with_I1_squared">
+<code class="descname">calc_integral_volatility_squared_with_I1_squared</code><span class="sig-paren">(</span><em>t1</em>, <em>t2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hullwhite_model.html#HullWhiteCurve.calc_integral_volatility_squared_with_I1_squared"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hullwhite_model.HullWhiteCurve.calc_integral_volatility_squared_with_I1_squared" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>t1</strong> &#8211; </li>
+<li><strong>t2</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return float:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<p>calculates drift integral <span class="math">\(I_2\)</span></p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="hullwhite_model.HullWhiteCurve.cast">
+<em class="property">classmethod </em><code class="descname">cast</code><span class="sig-paren">(</span><em>other</em>, <em>mean_reversion=0.0</em>, <em>volatility=0.0</em>, <em>terminal_date=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hullwhite_model.html#HullWhiteCurve.cast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hullwhite_model.HullWhiteCurve.cast" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>other</strong> (<em>ZeroRateCurve</em>) &#8211; </li>
+<li><strong>mean_reversion</strong> (<em>float</em><em> or </em><em>function</em>) &#8211; mean reversion speed of short rate process</li>
+<li><strong>volatility</strong> (<em>float</em><em> or </em><em>function</em>) &#8211; short rate volatility</li>
+<li><strong>terminal_date</strong> (<em>BusinessDate</em>) &#8211; date of terminal measure</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">HullWhiteCurve</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>build HullWhiteCurve i.e. Hull White model in terminal measure from
+ZeroRateCurve, mean reversion speed, volatility and terminal measure date.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hullwhite_model.HullWhiteCurve.evolve">
+<code class="descname">evolve</code><span class="sig-paren">(</span><em>x</em>, <em>s</em>, <em>e</em>, <em>q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hullwhite_model.html#HullWhiteCurve.evolve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hullwhite_model.HullWhiteCurve.evolve" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> &#8211; </li>
+<li><strong>s</strong> &#8211; </li>
+<li><strong>e</strong> &#8211; </li>
+<li><strong>q</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>evolve Hull White process of shortrate diviation math:: y = r - y</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hullwhite_model.HullWhiteCurve.get_discount_factor">
+<code class="descname">get_discount_factor</code><span class="sig-paren">(</span><em>start_date</em>, <em>end_date</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hullwhite_model.html#HullWhiteCurve.get_discount_factor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hullwhite_model.HullWhiteCurve.get_discount_factor" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>start_date</strong> (<em>BusinessDate</em>) &#8211; start date</li>
+<li><strong>end_date</strong> (<em>BusinessDate</em>) &#8211; end date</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return float:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<p>calculate the discount rate for the given start date and end date</p>
+<div class="math">
+\[P_{u,y}: \textrm{BusinessDate} {\times} \textrm{BusinessDate} \to \mathbb{R}\]</div>
+<p>and</p>
+<div class="math">
+\[(s,t) \mapsto P_{\text{init}}(s,t) \exp \left(-\frac{1}{2}(B^2(u,t)-B^2(u,s))
+\int_0^u \sigma^2(\tau)I_1(\tau,t), \mathrm{d}\tau\right)\mathrm{e}^{-(B(t,T)-B(t,S))y}\]</div>
+<p>with <span class="math">\(P_{\text{init}}(s,t) = \verb|Curve.get_discount_curve(s,t)|\)</span></p>
+<p>Here the variables with subscript <span class="math">\(\textrm{pld}\)</span> are dates (BusinessDate instances) and
+the variables without subscripts are year fractions between the correspondent
+<span class="math">\(\textrm{pld}\)</span> variables and <span class="math">\(\verb|validity_date|\)</span> in the default DCC (Act/365.25).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hullwhite_model.HullWhiteCurve.get_zero_rate">
+<code class="descname">get_zero_rate</code><span class="sig-paren">(</span><em>S</em>, <em>T</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hullwhite_model.html#HullWhiteCurve.get_zero_rate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hullwhite_model.HullWhiteCurve.get_zero_rate" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>S</strong> &#8211; </li>
+<li><strong>T</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>calculate zero rate between <cite>S</cite> and <cite>T</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hullwhite_model.HullWhiteCurve.pre_calculate">
+<code class="descname">pre_calculate</code><span class="sig-paren">(</span><em>s</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hullwhite_model.html#HullWhiteCurve.pre_calculate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hullwhite_model.HullWhiteCurve.pre_calculate" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>s</strong> (<em>BusinessDate</em>) &#8211; start date</li>
+<li><strong>e</strong> (<em>BusinessDate</em>) &#8211; end date</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>pre calculate values based only on grid points</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hullwhite_model.HullWhiteCurve.set_risk_factor">
+<code class="descname">set_risk_factor</code><span class="sig-paren">(</span><em>factor_date</em>, <em>factor_value=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hullwhite_model.html#HullWhiteCurve.set_risk_factor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hullwhite_model.HullWhiteCurve.set_risk_factor" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>factor_date</strong> (<em>BusinessDate</em>) &#8211; date of t</li>
+<li><strong>factor_value</strong> (<em>float</em>) &#8211; value of risk factor y</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>set <span class="math">\(y=r(t)-F(0,t)\)</span> risk factor and prepare discount factor integral
+.. :math:   ` int_0^t sigma(u)^2 I_1(u, t) du`</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="multi-currency-hull-white-model-extension">
+<h2>Multi Currency Hull White Model Extension<a class="headerlink" href="#multi-currency-hull-white-model-extension" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#hullwhite_multicurrency_model.HullWhiteFxCurve" title="hullwhite_multicurrency_model.HullWhiteFxCurve"><code class="xref py py-obj docutils literal"><span class="pre">hullwhite_multicurrency_model.HullWhiteFxCurve</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">param list(BusinessDate) x_list:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#hullwhite_multicurrency_model.HullWhiteMultiCurrencyCurve" title="hullwhite_multicurrency_model.HullWhiteMultiCurrencyCurve"><code class="xref py py-obj docutils literal"><span class="pre">hullwhite_multicurrency_model.HullWhiteMultiCurrencyCurve</span></code></a></td>
+<td>initializes foreign Hull White curve in multi currency model</td>
+</tr>
+</tbody>
+</table>
+<img src="_images/inheritance-f6eb6258b5d6af177dcb86303ba688cc2092f8b4.png" alt="Inheritance diagram of hullwhite_multicurrency_model" usemap="#inheritance331e2d1343" class="inheritance"/>
+<map id="inheritance331e2d1343" name="inheritance331e2d1343">
+<area shape="rect" id="node5" title="fx rate curve for currency pair" alt="" coords="246,2,291,12"/>
+<area shape="rect" id="node6" href="#hullwhite_model.HullWhiteCurve" target="_top" title="calculation of discount factors in the Hull White model" alt="" coords="471,33,561,43"/>
+<area shape="rect" id="node9" href="#market_risk_factor.GBMFxCurve" target="_top" title="models fx spot rate as spot * x" alt="" coords="338,2,429,12"/>
+<area shape="rect" id="node10" href="#hullwhite_multicurrency_model.HullWhiteMultiCurrencyCurve" target="_top" title="hullwhite_multicurrency_model.HullWhiteMultiCurrencyCurve" alt="" coords="603,33,766,43"/>
+<area shape="rect" id="node7" href="#risk_factor_model.RiskFactorModel" target="_top" title="RiskFactorModel" alt="" coords="219,44,317,54"/>
+<area shape="rect" id="node8" href="#hullwhite_multicurrency_model.HullWhiteFxCurve" target="_top" title="hullwhite_multicurrency_model.HullWhiteFxCurve" alt="" coords="449,2,583,12"/>
+<area shape="rect" id="node11" href="#risk_factor_model.RiskFactor" target="_top" title="RiskFactor" alt="" coords="94,33,176,44"/>
+</map>
+<span class="target" id="module-hullwhite_multicurrency_model"></span><dl class="class">
+<dt id="hullwhite_multicurrency_model.HullWhiteFxCurve">
+<em class="property">class </em><code class="descclassname">hullwhite_multicurrency_model.</code><code class="descname">HullWhiteFxCurve</code><span class="sig-paren">(</span><em>x_list=None</em>, <em>y_list=None</em>, <em>y_inter=None</em>, <em>origin=None</em>, <em>day_count=None</em>, <em>domestic_curve=None</em>, <em>foreign_curve=None</em>, <em>volatility=0.0</em>, <em>domestic_correlation=0.0</em>, <em>foreign_correlation=0.0</em>, <em>rate_correlation=0.0</em>, <em>inner_factor=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hullwhite_multicurrency_model.html#HullWhiteFxCurve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hullwhite_multicurrency_model.HullWhiteFxCurve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#market_risk_factor.GBMFxCurve" title="market_risk_factor.GBMFxCurve"><code class="xref py py-class docutils literal"><span class="pre">market_risk_factor.GBMFxCurve</span></code></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>x_list</strong> (<em>list</em><em>(</em><em>BusinessDate</em><em>)</em><em></em>) &#8211; </li>
+<li><strong>y_list</strong> (<em>list</em><em>(</em><em>BusinessDate</em><em>)</em><em></em>) &#8211; </li>
+<li><strong>y_inter</strong> (<em>list</em><em>(</em><em></em><em>)</em><em></em>) &#8211; </li>
+<li><strong>origin</strong> (<em>BusinessDate</em>) &#8211; </li>
+<li><strong>day_count</strong> (<em>DayCount</em>) &#8211; </li>
+<li><strong>domestic_curve</strong> (<a class="reference internal" href="#hullwhite_model.HullWhiteCurve" title="hullwhite_model.HullWhiteCurve"><em>HullWhiteCurve</em></a>) &#8211; </li>
+<li><strong>foreign_curve</strong> (<a class="reference internal" href="#hullwhite_model.HullWhiteCurve" title="hullwhite_model.HullWhiteCurve"><em>HullWhiteCurve</em></a>) &#8211; </li>
+<li><strong>volatility</strong> (<em>float</em><em> or </em><em>function</em><em> or </em><em>Curve</em>) &#8211; </li>
+<li><strong>domestic_correlation</strong> (<em>float</em>) &#8211; </li>
+<li><strong>foreign_correlation</strong> (<em>float</em>) &#8211; </li>
+<li><strong>rate_correlation</strong> (<em>float</em>) &#8211; </li>
+<li><strong>inner_factor</strong> (<a class="reference internal" href="#market_risk_factor.GBMFxCurve" title="market_risk_factor.GBMFxCurve"><em>GBMFxCurve</em></a><em> or </em><em>FxCurve</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="classmethod">
+<dt id="hullwhite_multicurrency_model.HullWhiteFxCurve.cast">
+<em class="property">classmethod </em><code class="descname">cast</code><span class="sig-paren">(</span><em>fx_curve</em>, <em>domestic_curve</em>, <em>foreign_curve</em>, <em>volatility=0.0</em>, <em>correlation=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hullwhite_multicurrency_model.html#HullWhiteFxCurve.cast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hullwhite_multicurrency_model.HullWhiteFxCurve.cast" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>fx_curve</strong> (<a class="reference internal" href="#market_risk_factor.GBMFxCurve" title="market_risk_factor.GBMFxCurve"><em>GBMFxCurve</em></a><em> or </em><em>FxCurve</em>) &#8211; FxCurve to retrieve factor expectation</li>
+<li><strong>domestic_curve</strong> (<a class="reference internal" href="#hullwhite_model.HullWhiteCurve" title="hullwhite_model.HullWhiteCurve"><em>HullWhiteCurve</em></a>) &#8211; domestic HullWhiteCurve</li>
+<li><strong>foreign_curve</strong> (<a class="reference internal" href="#hullwhite_model.HullWhiteCurve" title="hullwhite_model.HullWhiteCurve"><em>HullWhiteCurve</em></a>) &#8211; foreign HullWhiteCurve</li>
+<li><strong>volatility</strong> (<em>float</em><em> or </em><em>function</em>) &#8211; fx spot forward volatility</li>
+<li><strong>correlation</strong> (<em>dict</em><em>(</em><a class="reference internal" href="#risk_factor_model.RiskFactorModel" title="risk_factor_model.RiskFactorModel"><em>RiskFactorModel</em></a><em>, </em><a class="reference internal" href="#risk_factor_model.RiskFactorModel" title="risk_factor_model.RiskFactorModel"><em>RiskFactorModel</em></a><em>)</em><em></em>) &#8211; correlation matrix indexed by risk factors</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Build HullWhiteFxCurve from HullWhiteCurves and GBMFxCurve.
+Terminal measure date in foreign_curve is ignored since it is taken from domestic_curve.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hullwhite_multicurrency_model.HullWhiteFxCurve.evolve">
+<code class="descname">evolve</code><span class="sig-paren">(</span><em>x</em>, <em>s</em>, <em>e</em>, <em>q</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hullwhite_multicurrency_model.html#HullWhiteFxCurve.evolve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hullwhite_multicurrency_model.HullWhiteFxCurve.evolve" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> (<em>float</em>) &#8211; current state value, i.e. value before evolution step</li>
+<li><strong>s</strong> (<em>BusinessDate</em>) &#8211; current point in time, i.e. start point of next evolution step</li>
+<li><strong>e</strong> (<em>BusinessDate</em>) &#8211; next point in time, i.e. end point of evolution step</li>
+<li><strong>q</strong> (<em>float</em>) &#8211; standard normal random number to do step</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return float:</th><td class="field-body"><p class="first last">next state value, i.e. value after evolution step</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>evolves process state <cite>x</cite> from <cite>s</cite> to <cite>e</cite> in time depending of standard normal random variable <cite>q</cite></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="hullwhite_multicurrency_model.HullWhiteFxCurve.get_fx_rate">
+<code class="descname">get_fx_rate</code><span class="sig-paren">(</span><em>value_date</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hullwhite_multicurrency_model.html#HullWhiteFxCurve.get_fx_rate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hullwhite_multicurrency_model.HullWhiteFxCurve.get_fx_rate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="hullwhite_multicurrency_model.HullWhiteFxCurve.pre_calculate">
+<code class="descname">pre_calculate</code><span class="sig-paren">(</span><em>s</em>, <em>e</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hullwhite_multicurrency_model.html#HullWhiteFxCurve.pre_calculate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hullwhite_multicurrency_model.HullWhiteFxCurve.pre_calculate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="hullwhite_multicurrency_model.HullWhiteMultiCurrencyCurve">
+<em class="property">class </em><code class="descclassname">hullwhite_multicurrency_model.</code><code class="descname">HullWhiteMultiCurrencyCurve</code><span class="sig-paren">(</span><em>x_list=None</em>, <em>y_list=None</em>, <em>y_inter=None</em>, <em>origin=None</em>, <em>day_count=None</em>, <em>forward_tenor=None</em>, <em>mean_reversion=0.0001</em>, <em>volatility=0.0</em>, <em>domestic_curve=None</em>, <em>fx_curve=None</em>, <em>foreign_correlation=0.0</em>, <em>rate_correlation=0.0</em>, <em>inner_factor=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hullwhite_multicurrency_model.html#HullWhiteMultiCurrencyCurve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hullwhite_multicurrency_model.HullWhiteMultiCurrencyCurve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#hullwhite_model.HullWhiteCurve" title="hullwhite_model.HullWhiteCurve"><code class="xref py py-class docutils literal"><span class="pre">hullwhite_model.HullWhiteCurve</span></code></a></p>
+<blockquote>
+<div>initializes foreign Hull White curve in multi currency model</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>x_list</strong> (<em>list</em><em>(</em><em>float</em><em>)</em><em></em>) &#8211; </li>
+<li><strong>y_list</strong> (<em>list</em><em>(</em><em>float</em><em>)</em><em></em>) &#8211; </li>
+<li><strong>y_inter</strong> (<em>list</em><em>(</em><em>interpolation</em><em>)</em><em></em>) &#8211; </li>
+<li><strong>origin</strong> (<em>BusinessDate</em>) &#8211; </li>
+<li><strong>day_count</strong> (<em>DayCount</em>) &#8211; </li>
+<li><strong>forward_tenor</strong> (<em>BusinessPeriod</em>) &#8211; </li>
+<li><strong>or function mean_reversion</strong> (<em>float</em>) &#8211; volatility of foreign short rate process</li>
+<li><strong>or function volatility</strong> (<em>float</em>) &#8211; volatility of foreign short rate process</li>
+<li><strong>domestic_curve</strong> (<a class="reference internal" href="#hullwhite_model.HullWhiteCurve" title="hullwhite_model.HullWhiteCurve"><em>HullWhiteCurve</em></a>) &#8211; domestic rate HullWhite process</li>
+<li><strong>or GBMFxCurve fx_curve</strong> (<a class="reference internal" href="#hullwhite_multicurrency_model.HullWhiteFxCurve" title="hullwhite_multicurrency_model.HullWhiteFxCurve"><em>HullWhiteFxCurve</em></a>) &#8211; fx curve with volatility of ln(fx) process</li>
+<li><strong>foreign_correlation</strong> (<em>float</em>) &#8211; correlation of ln(fx) process and foreign rate process</li>
+<li><strong>rate_correlation</strong> (<em>float</em>) &#8211; correlation of domestic rate process and foreign rate process</li>
+<li><strong>inner_factor</strong> (<em>RateCurve</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="hullwhite_multicurrency_model.HullWhiteMultiCurrencyCurve.calc_integral_I2">
+<code class="descname">calc_integral_I2</code><span class="sig-paren">(</span><em>s</em>, <em>t</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hullwhite_multicurrency_model.html#HullWhiteMultiCurrencyCurve.calc_integral_I2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hullwhite_multicurrency_model.HullWhiteMultiCurrencyCurve.calc_integral_I2" title="Permalink to this definition">¶</a></dt>
+<dd><p>calculates the following integral (see formula for the step in the MC evolution)</p>
+<div class="math">
+\[\begin{split}\textrm{Var}(\chi(t) | \mathcal{F}_s) = \int_s^t \sigma^2_d(u)B^2_d(u, T) +
+\sigma^2_f(u)B^2_f(u,T) + \sigma^2_{FX}(u) \\
++ 2\left(- \rho_{d,f} B_f(u, T)\sigma_f(u)B_d(u, T)\sigma_d(u)
++ \left( - \rho_{f,FX} B_f(u, T)\sigma_f(u)
++ \rho_{d,FX} B_d(u, T)\sigma_d(u) \right) \sigma_{FX}(u) \right)\,\mathrm{d}u\end{split}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>s</strong> (<em>float</em>) &#8211; </li>
+<li><strong>t</strong> (<em>float</em>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return float:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="hullwhite_multicurrency_model.HullWhiteMultiCurrencyCurve.cast">
+<em class="property">classmethod </em><code class="descname">cast</code><span class="sig-paren">(</span><em>foreign_curve</em>, <em>domestic_curve</em>, <em>fx_curve</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hullwhite_multicurrency_model.html#HullWhiteMultiCurrencyCurve.cast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hullwhite_multicurrency_model.HullWhiteMultiCurrencyCurve.cast" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>foreign_curve</strong> (<a class="reference internal" href="#hullwhite_model.HullWhiteCurve" title="hullwhite_model.HullWhiteCurve"><em>HullWhiteCurve</em></a>) &#8211; </li>
+<li><strong>domestic_curve</strong> (<a class="reference internal" href="#hullwhite_model.HullWhiteCurve" title="hullwhite_model.HullWhiteCurve"><em>HullWhiteCurve</em></a>) &#8211; </li>
+<li><strong>fx_curve</strong> (<a class="reference internal" href="#hullwhite_multicurrency_model.HullWhiteFxCurve" title="hullwhite_multicurrency_model.HullWhiteFxCurve"><em>HullWhiteFxCurve</em></a>) &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Return HullWhiteMultiCurrencyCurve:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<p>build HullWhiteMultiCurrencyCurve from HullWhiteCurves and HullWhiteFxCurve.
+Terminal measure date in foreign_curve is ignored since it is taken from domestic_curve.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="releases.html" class="btn btn-neutral float-right" title="Releases" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="tutorials.html" class="btn btn-neutral" title="Tutorial" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Deutsche Postbank.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'alpha',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,9 @@
+<map id="inheritance331e2d1343" name="inheritance331e2d1343">
+<area shape="rect" id="node5" title="fx rate curve for currency pair" alt="" coords="246,2,291,12"/>
+<area shape="rect" id="node6" href="#hullwhite_model.HullWhiteCurve" target="_top" title="calculation of discount factors in the Hull White model" alt="" coords="471,33,561,43"/>
+<area shape="rect" id="node9" href="#market_risk_factor.GBMFxCurve" target="_top" title="models fx spot rate as spot * x" alt="" coords="338,2,429,12"/>
+<area shape="rect" id="node10" href="#hullwhite_multicurrency_model.HullWhiteMultiCurrencyCurve" target="_top" title="hullwhite_multicurrency_model.HullWhiteMultiCurrencyCurve" alt="" coords="603,33,766,43"/>
+<area shape="rect" id="node7" href="#risk_factor_model.RiskFactorModel" target="_top" title="RiskFactorModel" alt="" coords="219,44,317,54"/>
+<area shape="rect" id="node8" href="#hullwhite_multicurrency_model.HullWhiteFxCurve" target="_top" title="hullwhite_multicurrency_model.HullWhiteFxCurve" alt="" coords="449,2,583,12"/>
+<area shape="rect" id="node11" href="#risk_factor_model.RiskFactor" target="_top" title="RiskFactor" alt="" coords="94,33,176,44"/>
+</map>

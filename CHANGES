@@ -1,0 +1,19 @@
+# -*- coding: utf-8 -*-
+
+#  shortrate
+#  ------------
+#  risk factor model library python style.
+#
+#  Author:  pbrisk <pbrisk@icloud.com>
+#  Copyright: 2016, 2017 Deutsche Postbank AG
+#  Website: https://github.com/pbrisk/shortrate
+#  License: APACHE Version 2 License (see LICENSE file)
+
+
+Version 0.1
+===========
+
+Released December, 2016
+
+- Initial release
+- Support for Python 2.6, 2.7
