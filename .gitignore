@@ -1,0 +1,10 @@
+.project/
+*.pyc
+.DS_Store
+.pydevproject/
+.idea/
+/.idea/dictionaries/
+*.log
+.settings/org.eclipse.core.resources.prefs
+*.prof
+shortrate.egg-info/
