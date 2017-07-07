@@ -4,7 +4,7 @@
 #  -----------
 #  risk factor model library python style.
 #
-#  Author:  pbrisk <pbrisk@icloud.com>
+#  Author:  pbrisk <pbrisk_at_github@icloud.com>
 #  Website: https://github.com/pbrisk/shortrate
 #  License: MIT (see LICENSE file)
 

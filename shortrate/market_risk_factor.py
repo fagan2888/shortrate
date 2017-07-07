@@ -4,8 +4,8 @@
 #  -----------
 #  risk factor model library python style.
 #
-#  Author:  pbrisk <pbrisk@icloud.com>
-#  Website: https://github.com/pbrisk/shortrate
+#  Author:  sonntagsgesicht <sonntagsgesicht@github.com>
+#  Website: https://github.com/sonntagsgesicht/shortrate
 #  License: MIT (see LICENSE file)
 
 from math import sqrt, exp, log

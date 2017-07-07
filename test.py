@@ -4,12 +4,12 @@
 #  -----------
 #  risk factor model library python style.
 #
-#  Author:  pbrisk <pbrisk@icloud.com>
+#  Author:  pbrisk <pbrisk_at_github@icloud.com>
 #  Website: https://github.com/pbrisk/shortrate
 #  License: MIT (see LICENSE file)
 
 from datetime import datetime
-from os import getcwd, sep
+from os import getcwd, sep, path, makedirs
 from unittest import TestCase, main
 
 from businessdate import BusinessDate, BusinessRange
@@ -20,6 +20,10 @@ from shortrate.hullwhite_model import HullWhiteCurve
 from shortrate.hullwhite_multicurrency_model import HullWhiteMultiCurrencyCurve, HullWhiteFxCurve, GBMFxCurve
 
 from timewave import Engine, ConsumerConsumer, Consumer, MultiConsumer, StatisticsConsumer
+
+p = '.' + sep + 'pdf'
+if not path.exists(p):
+    makedirs('.' + sep + 'pdf')
 
 
 class ValuationConsumer(StatisticsConsumer):

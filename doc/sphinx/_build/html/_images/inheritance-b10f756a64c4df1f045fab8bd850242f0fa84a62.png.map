@@ -1,7 +1,0 @@
-<map id="inheritance7a7fc4d75f" name="inheritance7a7fc4d75f">
-<area shape="rect" id="node5" title="fx rate curve for currency pair" alt="" coords="330,30,392,44"/>
-<area shape="rect" id="node6" href="#market_risk_factor.BrownianZeroRateCurve" target="_top" title="simple Brownian motion rate diffusion" alt="" coords="605,31,765,45"/>
-<area shape="rect" id="node8" href="#market_risk_factor.GBMFxCurve" target="_top" title="models fx spot rate as spot * x" alt="" coords="454,30,577,44"/>
-<area shape="rect" id="node7" href="#risk_factor_model.RiskFactorModel" target="_top" title="RiskFactorModel" alt="" coords="295,59,427,72"/>
-<area shape="rect" id="node9" href="#risk_factor_model.RiskFactor" target="_top" title="RiskFactor" alt="" coords="127,45,237,59"/>
-</map>

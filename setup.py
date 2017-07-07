@@ -4,7 +4,7 @@
 #  ------------
 #  risk factor model library python style.
 #
-#  Author:  pbrisk <pbrisk@icloud.com>
+#  Author:  pbrisk <pbrisk_at_github@icloud.com>
 #  Copyright: 2016, 2017 Deutsche Postbank AG
 #  Website: https://github.com/pbrisk/shortrate
 #  License: APACHE Version 2 License (see LICENSE file)
@@ -20,9 +20,9 @@ except ImportError:
 setup(
     name='shortrate',
     description='risk factor model library python style.',
-    version='0.1',
+    version='0.3',
     author='Deutsche Postbank AG [pbrisk]',
-    author_email='pbrisk@icloud.com',
+    author_email='pbrisk_at_github@icloud.com',
     url='https://github.com/pbrisk/shortrate',
     bugtrack_url='https://github.com/pbrisk/shortrate/issues',
     license='Apache License 2.0',
@@ -42,14 +42,10 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: Implementation :: CPython',
-        'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: Education',
         'Topic :: Office/Business',
         'Topic :: Office/Business :: Financial',
-        'Topic :: Office/Business :: Financial :: Investment',
         'Topic :: Scientific/Engineering',
         'Topic :: Scientific/Engineering :: Mathematics',
         'Topic :: Utilities',
