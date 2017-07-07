@@ -20,7 +20,7 @@ except ImportError:
 setup(
     name='shortrate',
     description='risk factor model library python style.',
-    version='0.3',
+    version='0.2',
     author='Deutsche Postbank AG [pbrisk]',
     author_email='pbrisk_at_github@icloud.com',
     url='https://github.com/pbrisk/shortrate',
