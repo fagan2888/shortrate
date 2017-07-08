@@ -2,8 +2,11 @@
 shortrate
 =========
 
-.. image:: https://img.shields.io/codeship/c1455c20-9d70-0134-6c98-327be1016a00/master.svg
-    :target: https://codeship.com//projects/188651
+.. image:: https://img.shields.io/codeship/9088f9c0-4618-0135-c3c1-3602b75f498a/master.svg
+    :target: https://codeship.com//projects/231329
+
+.. image:: https://readthedocs.org/projects/shortrate/badge
+    :target: http://shortrate.readthedocs.io
 
 risk factor model library python style.
 
