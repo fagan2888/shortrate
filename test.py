@@ -66,7 +66,7 @@ _term = [-.0100, 0.0005, 0.0079, 0.0131, 0.0164, 0.0184, 0.0195, 0.0198,
          0.0197, 0.0192, 0.0185, 0.0176, 0.0167, 0.0157, 0.0147, 0.0137,
          0.0127, 0.0118, 0.0109, 0.0100, 0.0092, 0.0084, 0.0077, 0.0070,
          0.0064, 0.0058, 0.0052, 0.0047, 0.0042, 0.0037, 0.0033, 0.0029,
-         0.0025, 0.0021, 0.0018, 0.0014, 0.0011, 0.0008, 0.0005, 0.0003, -.0000]
+         0.0025, 0.0021, 0.0018, 0.0014, 0.0011, 0.0008, 0.0005, 0.0003]
 
 
 class HullWhiteModelUnitTests(TestCase):
@@ -121,26 +121,46 @@ class HullWhiteCurveUnitTests(TestCase):
 
     def test_curve(self):
         for d in self.grid:
-            assert self.zero_curve.get_discount_factor(self.today, d) == \
-                   self.hull_white_curve.get_discount_factor(self.today, d), \
-                'HullWhiteCurve fails at get_discount_factor(self.today, d) = get_discount_factor(%s, %s)' \
-                % (str(self.today), str(d))
-            assert self.zero_curve.get_discount_factor(d, self.termday) == \
-                   self.hull_white_curve.get_discount_factor(d, self.termday), \
-                'HullWhiteCurve fails at get_discount_factor(d, self.termday) = get_discount_factor(%s, %s)' \
-                % (str(d), str(self.termday))
+            zr = self.zero_curve.get_discount_factor(self.today, d)
+            hw = self.hull_white_curve.get_discount_factor(self.today, d)
+            self.assertAlmostEqual(zr, hw)
+
+            zr = self.zero_curve.get_discount_factor(d, self.termday)
+            hw = self.hull_white_curve.get_discount_factor(d, self.termday)
+            self.assertAlmostEqual(zr, hw)
+
+            zr = self.zero_curve.get_cash_rate(d)
+            hw = self.hull_white_curve.get_cash_rate(d)
+            self.assertAlmostEqual(zr, hw)
+
+            # assert self.zero_curve.get_discount_factor(self.today, d) == \
+            #        self.hull_white_curve.get_discount_factor(self.today, d), \
+            #     'HullWhiteCurve fails at get_discount_factor(self.today, d) = get_discount_factor(%s, %s)' \
+            #     % (str(self.today), str(d))
+            # assert self.zero_curve.get_discount_factor(d, self.termday) == \
+            #        self.hull_white_curve.get_discount_factor(d, self.termday), \
+            #     'HullWhiteCurve fails at get_discount_factor(d, self.termday) = get_discount_factor(%s, %s)' \
+            #     % (str(d), str(self.termday))
+            # assert self.zero_curve.get_cash_rate(d) == self.hull_white_curve.get_cash_rate(d), \
+            #     'HullWhiteCurve fails at get_cash_rate(d) = get_cash_rate(%s)' % (str(d))
+
             if not self.today == d and not d == self.termday:
-                assert self.zero_curve.get_zero_rate(self.today, d) == self.hull_white_curve.get_zero_rate(self.today,
-                                                                                                           d), \
-                    'HullWhiteCurve fails at get_zero_rate(self.today, d) = get_zero_rate(%s, %s)' \
-                    % (str(self.today), str(d))
-                assert self.zero_curve.get_zero_rate(d, self.termday) == \
-                       self.hull_white_curve.get_zero_rate(d, self.termday), \
-                    'HullWhiteCurve fails at get_zero_rate(d, self.termday) = get_zero_rate(%s, %s)' \
-                    % (str(d), str(self.termday))
-            assert self.zero_curve.get_cash_rate(d) == self.hull_white_curve.get_cash_rate(d), \
-                'HullWhiteCurve fails at get_cash_rate(d) = get_cash_rate(%s)' \
-                % (str(d))
+                zr =self.zero_curve.get_zero_rate(self.today, d)
+                hw = self.hull_white_curve.get_zero_rate(self.today, d)
+                self.assertAlmostEqual(zr, hw)
+
+                zr = self.zero_curve.get_zero_rate(d, self.termday)
+                hw = self.hull_white_curve.get_zero_rate(d, self.termday)
+                self.assertAlmostEqual(zr, hw)
+
+                # assert self.zero_curve.get_zero_rate(self.today, d) == \
+                #        self.hull_white_curve.get_zero_rate(self.today, d), \
+                #     'HullWhiteCurve fails at get_zero_rate(self.today, d) = get_zero_rate(%s, %s)' \
+                #     % (str(self.today), str(d))
+                # assert self.zero_curve.get_zero_rate(d, self.termday) == \
+                #        self.hull_white_curve.get_zero_rate(d, self.termday), \
+                #     'HullWhiteCurve fails at get_zero_rate(d, self.termday) = get_zero_rate(%s, %s)' \
+                #     % (str(d), str(self.termday))
 
     def test_short_rate(self):
         res = list()

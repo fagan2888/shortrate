@@ -41,7 +41,7 @@ class HullWhiteMultiCurrencyCurve(HullWhiteCurve):
                   rate_correlation=fx_curve.rate_correlation)
         return new
 
-    def __init__(self, x_list=None, y_list=None, y_inter=None,
+    def __init__(self, domain=None, data=None, interpolation=None,
                  origin=None, day_count=None, forward_tenor=None,
                  mean_reversion=0.0001, volatility=0.0,
                  domestic_curve=None, fx_curve=None,
@@ -51,9 +51,9 @@ class HullWhiteMultiCurrencyCurve(HullWhiteCurve):
         """
             initializes foreign Hull White curve in multi currency model
 
-        :param list(float) x_list:
-        :param list(float) y_list:
-        :param list(interpolation) y_inter:
+        :param list(float) domain:
+        :param list(float) data:
+        :param list(interpolation) interpolation:
         :param BusinessDate origin:
         :param DayCount day_count:
         :param BusinessPeriod forward_tenor:
@@ -68,9 +68,9 @@ class HullWhiteMultiCurrencyCurve(HullWhiteCurve):
         terminal_date = domestic_curve.terminal_date if domestic_curve else None
 
         if inner_factor is None:
-            inner_factor = ZeroRateCurve(x_list, y_list, y_inter, origin, day_count, forward_tenor)
+            inner_factor = ZeroRateCurve(domain, data, interpolation, origin, day_count, forward_tenor)
         else:
-            if any([x_list, y_list, y_inter, origin, day_count, forward_tenor]):
+            if any([domain, data, interpolation, origin, day_count, forward_tenor]):
                 raise (TypeError, 'If `inner_factor` is given all other `RateCurve` properties must be `None`.')
             if isinstance(inner_factor, HullWhiteCurve):
                 mean_reversion = inner_factor.mean_reversion

@@ -12,7 +12,7 @@
 from math import sqrt, exp
 
 from businessdate import BusinessDate
-from dcf import ZeroRateCurve, TIME_SHIFT, compounding
+from dcf import ZeroRateCurve, compounding
 from scipy import integrate
 
 from risk_factor_model import RiskFactorModel
@@ -41,13 +41,12 @@ class HullWhiteCurve(ZeroRateCurve, RiskFactorModel):
         new = cls(mean_reversion=mean_reversion, volatility=volatility, terminal_date=terminal_date, inner_factor=other)
         return new
 
-    def __init__(self, x_list=None, y_list=None, y_inter=None,
-                 origin=None, day_count=None, forward_tenor=None,
+    def __init__(self, domain=None, data=None, interpolation=None, origin=None, day_count=None, forward_tenor=None,
                  mean_reversion=0.0, volatility=0.0, terminal_date=None, inner_factor=None):
         """
-        :param list(float) x_list:
-        :param list(float) y_list:
-        :param list(interpolation) y_inter:
+        :param list(float) domain:
+        :param list(float) data:
+        :param list(interpolation) interpolation:
         :param BusinessDate origin:
         :param DayCount day_count:
         :param BusinessPeriod forward_tenor: standard forward
@@ -62,17 +61,19 @@ class HullWhiteCurve(ZeroRateCurve, RiskFactorModel):
         """
 
         if inner_factor is None:
-            inner_factor = ZeroRateCurve(x_list, y_list, y_inter, origin, day_count, forward_tenor)
+            inner_factor = ZeroRateCurve(domain, data, interpolation, origin, day_count, forward_tenor)
         else:
-            if any([x_list, y_list, y_inter, origin, day_count, forward_tenor]):
+            if any([domain, data, interpolation, origin, day_count, forward_tenor]):
                 raise (TypeError, 'If `inner_factor` is given all other `RateCurve` properties must be `None`.')
 
         RiskFactorModel.__init__(self, inner_factor, 0.0)
 
         super(HullWhiteCurve, self).__init__(inner_factor.domain,
-                                             [inner_factor.get_storage_type(x) for x in inner_factor.domain],
-                                             (inner_factor._y_left, inner_factor._y_mid, inner_factor._y_right),
-                                             inner_factor.origin, inner_factor.day_count,
+                                             inner_factor(inner_factor.domain),
+                                             #[inner_factor.get_storage_type(inner_factor, x) for x in inner_factor.domain],
+                                             inner_factor.interpolation,
+                                             inner_factor.origin,
+                                             inner_factor.day_count,
                                              inner_factor.forward_tenor)
 
         # init mean reversion
@@ -377,7 +378,7 @@ class HullWhiteCurve(ZeroRateCurve, RiskFactorModel):
         calculate zero rate between `S` and `T`.
         """
         if S == T:
-            T += TIME_SHIFT
+            T += self.__class__._time_shift
             pass
         df = self.get_discount_factor(S, T)
         yf = self.day_count(S, T)
