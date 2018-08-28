@@ -23,7 +23,7 @@ from hullwhite_model import HullWhiteCurve
 
 class HullWhiteMultiCurrencyCurve(HullWhiteCurve):
     @classmethod  # todo align signature with HullWhiteFxCurve ???
-    def cast(cls, foreign_curve, domestic_curve, fx_curve):
+    def build(cls, foreign_curve, domestic_curve, fx_curve):
         """
         :param HullWhiteCurve foreign_curve:
         :param HullWhiteCurve domestic_curve:

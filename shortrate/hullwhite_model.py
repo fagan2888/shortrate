@@ -24,7 +24,7 @@ class HullWhiteCurve(ZeroRateCurve, RiskFactorModel):
     """
 
     @classmethod
-    def cast(cls, other, mean_reversion=0.0, volatility=0.0, terminal_date=None):
+    def build(cls, other, mean_reversion=0.0, volatility=0.0, terminal_date=None):
         """
 
         :param ZeroRateCurve other:
