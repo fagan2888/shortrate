@@ -308,7 +308,7 @@ class MultiCcyHullWhiteSimulationUnitTests(TestCase):
         self.zero_curve = self.flat_zero_curve
         self.fx_curve = FxCurve([self.today], [1.], domestic_curve=self.zero_curve, foreign_curve=self.zero_curve)
         self.fx_volatility = .3
-        self.gbm_fx_curve = GBMFxCurve.cast(self.fx_curve, self.fx_volatility)
+        self.gbm_fx_curve = GBMFxCurve.build(self.fx_curve, self.fx_volatility)
         self.mean_reversion = .1
         self.volatility = .005
         self.hull_white_curve = HullWhiteCurve.build(self.zero_curve,
@@ -341,9 +341,9 @@ class MultiCcyHullWhiteSimulationUnitTests(TestCase):
             corr[self.hull_white_curve, self.gbm_fx_curve] = dx
             corr[self.hull_white_curve_2, self.gbm_fx_curve] = fx
             corr[self.hull_white_curve, self.hull_white_curve_2] = df
-            hull_white_fx_curve = HullWhiteFxCurve.cast(self.gbm_fx_curve,
-                                                        self.hull_white_curve,
-                                                        self.hull_white_curve_2, None, corr)
+            hull_white_fx_curve = HullWhiteFxCurve.build(self.gbm_fx_curve,
+                                                         self.hull_white_curve,
+                                                         self.hull_white_curve_2, None, corr)
 
             hull_white_mc_curve = HullWhiteMultiCurrencyCurve.build(self.hull_white_curve_2,
                                                                     self.hull_white_curve,

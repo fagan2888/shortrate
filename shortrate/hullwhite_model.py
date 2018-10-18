@@ -18,31 +18,13 @@ from scipy import integrate
 from risk_factor_model import RiskFactorModel
 
 
-class HullWhiteCurve(ZeroRateCurve, RiskFactorModel):
+class HullWhiteCurveFactorModel(ZeroRateCurve, RiskFactorModel):
     """
-    calculation of discount factors in the Hull White model
-    """
-
-    @classmethod
-    def build(cls, other, mean_reversion=0.0, volatility=0.0, terminal_date=None):
-        """
-
-        :param ZeroRateCurve other:
-        :param mean_reversion: mean reversion speed of short rate process
-        :type  mean_reversion: float or function
-        :param volatility: short rate volatility
-        :type  volatility: float or function
-        :param BusinessDate terminal_date: date of terminal measure
-        :return: HullWhiteCurve
-
         build HullWhiteCurve i.e. Hull White model in terminal measure from
         ZeroRateCurve, mean reversion speed, volatility and terminal measure date.
-        """
-        new = cls(mean_reversion=mean_reversion, volatility=volatility, terminal_date=terminal_date, inner_factor=other)
-        return new
+    """
 
-    def __init__(self, domain=None, data=None, interpolation=None, origin=None, day_count=None, forward_tenor=None,
-                 mean_reversion=0.0, volatility=0.0, terminal_date=None, inner_factor=None):
+    def __init__(self, inner_factor, mean_reversion=0.0, volatility=0.0, terminal_date=None):
         """
         :param list(float) domain:
         :param list(float) data:
@@ -57,40 +39,22 @@ class HullWhiteCurve(ZeroRateCurve, RiskFactorModel):
         :param BusinessDate terminal_date: date of terminal measure
         :param RateCurve inner_factor:
 
-        initializes Hull White curve
+        initializes Hull White drift
         """
-
-        if inner_factor is None:
-            inner_factor = ZeroRateCurve(domain, data, interpolation, origin, day_count, forward_tenor)
-        else:
-            if any([domain, data, interpolation, origin, day_count, forward_tenor]):
-                raise (TypeError, 'If `inner_factor` is given all other `RateCurve` properties must be `None`.')
 
         RiskFactorModel.__init__(self, inner_factor, 0.0)
 
-        super(HullWhiteCurve, self).__init__(inner_factor.domain,
-                                             inner_factor(inner_factor.domain),
-                                             #[inner_factor.get_storage_type(inner_factor, x) for x in inner_factor.domain],
-                                             inner_factor.interpolation,
-                                             inner_factor.origin,
-                                             inner_factor.day_count,
-                                             inner_factor.forward_tenor)
+        super(HullWhiteCurveFactorModel, self).__init__(inner_factor.domain,
+                                                        inner_factor(inner_factor.domain),
+                                                        inner_factor.interpolation,
+                                                        inner_factor.origin,
+                                                        inner_factor.day_count,
+                                                        inner_factor.forward_tenor)
 
-        # init mean reversion
-        # time dependent mean reversion speed -> not implemented yet
-
-        # if isinstance(mean_reversion, float):
-        #     self.mean_reversion = (lambda x: mean_reversion)
-        # elif hasattr(mean_reversion, 'origin'):
-        #     self.mean_reversion = mean_reversion.to_curve()
-        # else:
-        #     self.mean_reversion = mean_reversion
-
-        # init mean reversion
         if isinstance(mean_reversion, float):
             self.mean_reversion = mean_reversion
         else:
-            raise NotImplementedError
+            raise NotImplementedError('Mean reversion function or term structure not yet supported.')
 
         # init volatility
         if isinstance(volatility, float):
@@ -99,6 +63,18 @@ class HullWhiteCurve(ZeroRateCurve, RiskFactorModel):
             self.volatility = volatility.to_curve()
         else:
             self.volatility = volatility
+
+        # init volatility
+        time = list()
+        if isinstance(volatility, float):
+            self._sigma = (lambda x: volatility)
+        elif isinstance(volatility, (tuple, list)):
+            if isinstance(time, (tuple, list)):
+                self._sigma = (lambda x: max(s for t, s in zip(time, volatility) if t <= x))
+            else:
+                self._sigma = (lambda x: max(s for i, s in enumerate(volatility) if float(i) * time <= x))
+        else:
+            self._sigma = volatility
 
         # terminal_date
         if terminal_date is None:
@@ -223,7 +199,7 @@ class HullWhiteCurve(ZeroRateCurve, RiskFactorModel):
                 self.calc_integral_volatility_squared_with_I1_squared(0., s)
         return part1and3 + part2
 
-    # integrate drift integrals of curve part
+    # integrate drift integrals of drift part
 
     def _calc_integrals(self, e):
         """
@@ -320,11 +296,11 @@ class HullWhiteCurve(ZeroRateCurve, RiskFactorModel):
 
     # ZeroRateCurve methods
 
-    def get_discount_factor(self, start_date, end_date):
+    def get_discount_factor(self, start, stop=None):
         r"""
 
-        :param BusinessDate start_date: start date
-        :param BusinessDate end_date: end date
+        :param BusinessDate start: start date
+        :param BusinessDate stop: end date
         :return float:
 
         calculate the discount rate for the given start date and end date
@@ -349,16 +325,16 @@ class HullWhiteCurve(ZeroRateCurve, RiskFactorModel):
         :math:`\textrm{pld}` variables and :math:`\verb|validity_date|` in the default DCC (Act/365.25).
 
         """
+        if stop is None:
+            return self.get_discount_factor(self.origin, start)
 
-        # assert self._factor_date <= S <= T
-
-        df = self.inner_factor.get_discount_factor(start_date, end_date)
+        df = self.inner_factor.get_discount_factor(start, stop)
 
         loc_diff_in_years = BusinessDate.diff_in_years  # for speed opt use pointer
 
         factor_yf = self._factor_yf
-        start_yf = loc_diff_in_years(self.origin, start_date)
-        end_yf = loc_diff_in_years(self.origin, end_date)
+        start_yf = loc_diff_in_years(self.origin, start)
+        end_yf = loc_diff_in_years(self.origin, stop)
 
         loc_calc_b = self.calc_integral_B  # for speed opt use pointer
 
@@ -369,17 +345,26 @@ class HullWhiteCurve(ZeroRateCurve, RiskFactorModel):
 
         return df * exp(arg)
 
-    def get_zero_rate(self, S, T):
-        """
-        :param S:
-        :param T:
-        :return:
+    def get_zero_rate(self, start, stop=None):
+        if stop is None:
+            return self.get_zero_rate(self.origin, start)
 
-        calculate zero rate between `S` and `T`.
-        """
-        if S == T:
-            T += self.__class__._time_shift
+        if start == stop:
+            stop += self.__class__._time_shift
             pass
-        df = self.get_discount_factor(S, T)
-        yf = self.day_count(S, T)
+        df = self.get_discount_factor(start, stop)
+        yf = self.day_count(start, stop)
         return compounding.continuous_rate(df, yf)
+
+
+class HullWhiteCurve(HullWhiteCurveFactorModel):
+
+    @classmethod
+    def build(cls, other, mean_reversion=0.0, volatility=0.0, terminal_date=None):
+        return HullWhiteCurveFactorModel(other, mean_reversion, volatility, terminal_date)
+
+    def __init__(self, domain=None, data=None, interpolation=None,
+                 origin=None, day_count=None, forward_tenor=None,
+                 mean_reversion=0.0, volatility=0.0, terminal_date=None):
+        inner_factor = ZeroRateCurve(domain, data, interpolation, origin, day_count, forward_tenor)
+        super(HullWhiteCurve, self).__init__(inner_factor, mean_reversion, volatility, terminal_date)
