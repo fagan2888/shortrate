@@ -14,15 +14,14 @@ from unittest import TestCase, main
 
 from businessdate import BusinessDate, BusinessRange
 from dcf import ZeroRateCurve, DiscountFactorCurve, FxCurve, FxRate
+from timewave import Engine, ConsumerConsumer, Consumer, MultiConsumer, StatisticsConsumer
 
 from shortrate.risk_factor_model import RiskFactorProducer, MultiRiskFactorProducer
-from shortrate.market_risk_factor import GeometricBrownianMotionFxRateFactorModel, GaussFlatSpreadZeroRateCurve, \
-    GeometricBrownianMotionFxRate
-from shortrate.hullwhite_model import HullWhiteCurve
-from shortrate.hullwhite_multicurrency_model import HullWhiteMultiCurrencyCurveFactorModel, HullWhiteCurveFactorModel, \
-    HullWhiteFxRateFactorModel
-
-from timewave import Engine, ConsumerConsumer, Consumer, MultiConsumer, StatisticsConsumer
+from shortrate.market_risk_factor import GeometricBrownianMotionFxRateFactorModel, GeometricBrownianMotionFxRate, \
+    GaussFlatSpreadZeroRateCurve
+from shortrate.hullwhite_model import HullWhiteCurveFactorModel, HullWhiteCurve
+from shortrate.hullwhite_multicurrency_model import HullWhiteMultiCurrencyCurveFactorModel, \
+    HullWhiteMultiCurrencyCurve, HullWhiteFxRateFactorModel, HullWhiteFxRate
 
 p = '.' + sep + 'pdf'
 if not path.exists(p):
@@ -384,6 +383,10 @@ class MultiCcyHullWhiteSimulationUnitTests(TestCase):
         self.assertRaises(TypeError, HullWhiteMultiCurrencyCurveFactorModel, d, f, FxRate())
         self.assertRaises(TypeError, HullWhiteMultiCurrencyCurveFactorModel, d, ZeroRateCurve(), x)
         self.assertRaises(TypeError, HullWhiteMultiCurrencyCurveFactorModel, ZeroRateCurve(), f, x)
+
+        HullWhiteCurve()
+        HullWhiteFxRate()
+        HullWhiteMultiCurrencyCurve()
 
 
 class GeometricBrownianMotionFxRateTest(TestCase):

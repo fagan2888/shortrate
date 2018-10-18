@@ -259,7 +259,7 @@ class HullWhiteCurveFactorModel(ZeroRateCurve, RiskFactorModel):
             if (s, e) not in self._pre_calc_diffusion else self._pre_calc_diffusion[s, e]
         return x * i1 + i2 + v * q
 
-    def set_risk_factor(self, factor_date, factor_value=0.0):
+    def set_risk_factor(self, factor_date=None, factor_value=0.0):
         """
         :param BusinessDate factor_date: date of t
         :param float factor_value: value of risk factor y
@@ -269,7 +269,8 @@ class HullWhiteCurveFactorModel(ZeroRateCurve, RiskFactorModel):
         .. :math:   ` \int_0^t \sigma(u)^2 I_1(u, t) du`
 
         """
-        self._factor_date = factor_date
+        self._factor_date = self._initial_factor_date if factor_date is None else factor_date
+
         self._factor_yf = BusinessDate.diff_in_years(self.origin, factor_date)
         self._factor_value = factor_value
 

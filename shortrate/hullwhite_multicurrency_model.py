@@ -19,81 +19,7 @@ from timewave import TimeDependentParameter
 
 from risk_factor_model import RiskFactorModel
 from market_risk_factor import GeometricBrownianMotionFxRateFactorModel
-from hullwhite_model import HullWhiteCurveFactorModel
-
-
-# todo: sort out if domestic_curve and fx_curve must be RiskFactorModel or just Curve?
-
-class HullWhiteMultiCurrencyCurveFactorModel(HullWhiteCurveFactorModel):
-    """
-        build HullWhiteMultiCurrencyCurve from HullWhiteCurves and HullWhiteFxCurve.
-        Terminal measure date in foreign_curve is ignored since it is taken from domestic_curve.
-        initializes foreign Hull White drift in multi currency model
-    """
-
-    def __init__(self, inner_factor, domestic_hw_curve, hw_fx_curve):
-        """
-
-        :param HullWhiteCurveFactorModel inner_factor:
-        :param HullWhiteCurveFactorModel domestic_hw_curve:
-        :param HullWhiteFxRateFactorModel hw_fx_curve:
-
-        """
-        if not isinstance(inner_factor, HullWhiteCurveFactorModel):
-            names = self.__class__.__name__, HullWhiteCurveFactorModel.__name__, inner_factor.__class__.__name__
-            raise TypeError('%s requires inner_factor of type %s. %s given.' % names)
-
-        if not isinstance(domestic_hw_curve, HullWhiteCurveFactorModel):
-            names = self.__class__.__name__, HullWhiteCurveFactorModel.__name__, domestic_hw_curve.__class__.__name__
-            raise TypeError('%s requires curve argument of type %s. %s given.' % names)
-
-        if not isinstance(hw_fx_curve, HullWhiteFxRateFactorModel):
-            names = self.__class__.__name__, HullWhiteFxRateFactorModel.__name__, hw_fx_curve.__class__.__name__
-            raise TypeError('%s requires fx argument of type %s. %s given.' % names)
-
-        super(HullWhiteMultiCurrencyCurveFactorModel, self).__init__(inner_factor,
-                                                                     inner_factor.mean_reversion,
-                                                                     inner_factor.volatility,
-                                                                     domestic_hw_curve.terminal_date)
-
-        # collect parameter for multi currency Hull White model
-        self._domestic_model = domestic_hw_curve
-        self._fx_model = hw_fx_curve
-
-    def calc_integral_I2(self, s, t):
-        r"""
-        calculates the following integral (see formula for the step in the MC evolution)
-
-        .. math:: \textrm{Var}(\chi(t) | \mathcal{F}_s) = \int_s^t \sigma^2_d(u)B^2_d(u, T) +
-         \sigma^2_f(u)B^2_f(u,T) + \sigma^2_{FX}(u) \\
-         + 2\left(- \rho_{d,f} B_f(u, T)\sigma_f(u)B_d(u, T)\sigma_d(u)
-         + \left( - \rho_{f,FX} B_f(u, T)\sigma_f(u)
-         + \rho_{d,FX} B_d(u, T)\sigma_d(u) \right) \sigma_{FX}(u) \right)\,\mathrm{d}u
-
-        :param float s:
-        :param float t:
-        :return float:
-        """
-        if not self._fx_model.foreign_correlation and not self._fx_model.rate_correlation:
-            return super(HullWhiteMultiCurrencyCurveFactorModel, self).calc_integral_I2(s, t)
-
-        terminal_date_yf = BusinessDate.diff_in_years(self.origin, self.terminal_date)
-
-        # todo could use static version self. calc_integral_B(u, terminal_date_yf, domestic_mean_reversion)
-        func1 = (lambda u: self.calc_integral_I1(u, t)
-                           * (self.volatility(u) ** 2 * self.calc_integral_B(u, t) -
-                              self._fx_model.rate_correlation *
-                              self.volatility(u) *
-                              self._domestic_model.volatility(u) *
-                              self._domestic_model.calc_integral_B(u, terminal_date_yf) -
-                              self._fx_model.foreign_correlation * self.volatility(t) * self._fx_model.volatility(t)))
-        part1, err1 = integrate.quad(func1, s, t)
-
-        part2 = self.calc_integral_B(s, t) * \
-                self.calc_integral_I1(s, t) * \
-                self.calc_integral_volatility_squared_with_I1_squared(0., s)
-
-        return part1 + part2
+from hullwhite_model import HullWhiteCurveFactorModel, HullWhiteCurve
 
 
 class HullWhiteFxRateFactorModel(FxRate, RiskFactorModel):
@@ -227,28 +153,101 @@ class HullWhiteFxRateFactorModel(FxRate, RiskFactorModel):
         return x * exp(d - v_d * q[0] + v_x * q[1] + v_f * q[2])
 
 
+class HullWhiteFxRate(HullWhiteFxRateFactorModel):
+
+    def __init__(self, value=1.0, origin=None, day_count=None,
+                 domestic_curve=None, foreign_curve=None, volatility=0.0,
+                 domestic_correlation=0., foreign_correlation=0., rate_correlation=0., correlation=None):
+        origin = BusinessDate() if origin is None else origin
+        inner_factor = FxRate(value, origin, day_count)
+        domestic_curve = HullWhiteCurve([inner_factor.origin], [0.]) if domestic_curve is None else domestic_curve
+        foreign_curve = domestic_curve if foreign_curve is None else foreign_curve
+        super(HullWhiteFxRate, self).__init__(inner_factor, domestic_curve, foreign_curve, volatility,
+                                              domestic_correlation, foreign_correlation, rate_correlation,
+                                              correlation)
+
+
+class HullWhiteMultiCurrencyCurveFactorModel(HullWhiteCurveFactorModel):
+    """
+        build HullWhiteMultiCurrencyCurve from HullWhiteCurves and HullWhiteFxCurve.
+        Terminal measure date in foreign_curve is ignored since it is taken from domestic_curve.
+        initializes foreign Hull White drift in multi currency model
+    """
+
+    def __init__(self, inner_factor, domestic_hw_curve, hw_fx_curve):
+        """
+
+        :param HullWhiteCurveFactorModel inner_factor:
+        :param HullWhiteCurveFactorModel domestic_hw_curve:
+        :param HullWhiteFxRateFactorModel hw_fx_curve:
+
+        """
+        if not isinstance(inner_factor, HullWhiteCurveFactorModel):
+            names = self.__class__.__name__, HullWhiteCurveFactorModel.__name__, inner_factor.__class__.__name__
+            raise TypeError('%s requires inner_factor of type %s. %s given.' % names)
+
+        if not isinstance(domestic_hw_curve, HullWhiteCurveFactorModel):
+            names = self.__class__.__name__, HullWhiteCurveFactorModel.__name__, domestic_hw_curve.__class__.__name__
+            raise TypeError('%s requires curve argument of type %s. %s given.' % names)
+
+        if not isinstance(hw_fx_curve, HullWhiteFxRateFactorModel):
+            names = self.__class__.__name__, HullWhiteFxRateFactorModel.__name__, hw_fx_curve.__class__.__name__
+            raise TypeError('%s requires fx argument of type %s. %s given.' % names)
+
+        super(HullWhiteMultiCurrencyCurveFactorModel, self).__init__(inner_factor,
+                                                                     inner_factor.mean_reversion,
+                                                                     inner_factor.volatility,
+                                                                     domestic_hw_curve.terminal_date)
+
+        # collect parameter for multi currency Hull White model
+        self._domestic_model = domestic_hw_curve
+        self._fx_model = hw_fx_curve
+
+    def calc_integral_I2(self, s, t):
+        r"""
+        calculates the following integral (see formula for the step in the MC evolution)
+
+        .. math:: \textrm{Var}(\chi(t) | \mathcal{F}_s) = \int_s^t \sigma^2_d(u)B^2_d(u, T) +
+         \sigma^2_f(u)B^2_f(u,T) + \sigma^2_{FX}(u) \\
+         + 2\left(- \rho_{d,f} B_f(u, T)\sigma_f(u)B_d(u, T)\sigma_d(u)
+         + \left( - \rho_{f,FX} B_f(u, T)\sigma_f(u)
+         + \rho_{d,FX} B_d(u, T)\sigma_d(u) \right) \sigma_{FX}(u) \right)\,\mathrm{d}u
+
+        :param float s:
+        :param float t:
+        :return float:
+        """
+        if not self._fx_model.foreign_correlation and not self._fx_model.rate_correlation:
+            return super(HullWhiteMultiCurrencyCurveFactorModel, self).calc_integral_I2(s, t)
+
+        terminal_date_yf = BusinessDate.diff_in_years(self.origin, self.terminal_date)
+
+        # todo could use static version self. calc_integral_B(u, terminal_date_yf, domestic_mean_reversion)
+        func1 = (lambda u: self.calc_integral_I1(u, t)
+                           * (self.volatility(u) ** 2 * self.calc_integral_B(u, t) -
+                              self._fx_model.rate_correlation *
+                              self.volatility(u) *
+                              self._domestic_model.volatility(u) *
+                              self._domestic_model.calc_integral_B(u, terminal_date_yf) -
+                              self._fx_model.foreign_correlation * self.volatility(t) * self._fx_model.volatility(t)))
+        part1, err1 = integrate.quad(func1, s, t)
+
+        part2 = self.calc_integral_B(s, t) * \
+                self.calc_integral_I1(s, t) * \
+                self.calc_integral_volatility_squared_with_I1_squared(0., s)
+
+        return part1 + part2
+
+
 class HullWhiteMultiCurrencyCurve(HullWhiteMultiCurrencyCurveFactorModel):
     """
         initializes foreign Hull White drift in multi currency model
     """
 
-    @classmethod  # todo align signature with HullWhiteFxCurve ???
-    def build(cls, foreign_curve, domestic_curve, fx_curve,
-              mean_reversion=0.0, volatility=0.0, terminal_date=None,
-              foreign_correlation=0.0, rate_correlation=0.0):
-        # collect parameter for simple Hull White model
-        mean_reversion = getattr(foreign_curve, 'mean_reversion', mean_reversion)
-        volatility = getattr(foreign_curve, 'volatility', volatility)
-        terminal_date = getattr(foreign_curve, 'terminal_date', terminal_date)
-        terminal_date = getattr(domestic_curve, 'terminal_date', terminal_date)
-
-        return HullWhiteMultiCurrencyCurveFactorModel(foreign_curve, domestic_curve, fx_curve)
-
-    def __init__(self, domain=None, data=None, interpolation=None,
+    def __init__(self, domain=(), data=(), interpolation=None,
                  origin=None, day_count=None, forward_tenor=None,
                  mean_reversion=0.0001, volatility=0.0,
-                 domestic_hw_curve=None, hw_fx_curve=None,
-                 foreign_correlation=0.0, rate_correlation=0.0):
+                 domestic_hw_curve=None, hw_fx_curve=None):
         """
 
         :param list(BusinesDate) domain:
@@ -265,14 +264,15 @@ class HullWhiteMultiCurrencyCurve(HullWhiteMultiCurrencyCurveFactorModel):
         :param float rate_correlation:
 
         """
+        terminal_date = domain[-1] if domain else None
+        terminal_date = terminal_date if domestic_hw_curve is None else domestic_hw_curve.terminal_date
+        domestic_hw_curve = HullWhiteCurve() if domestic_hw_curve is None else domestic_hw_curve
+        hw_fx_curve = HullWhiteFxRate() if hw_fx_curve is None else hw_fx_curve
         inner_factor = ZeroRateCurve(domain, data, interpolation, origin, day_count, forward_tenor)
-        inner_factor = HullWhiteCurveFactorModel(inner_factor, mean_reversion, volatility, domestic_hw_curve.terminal_date)
+        inner_factor = HullWhiteCurveFactorModel(inner_factor, mean_reversion, volatility, terminal_date)
 
         super(HullWhiteMultiCurrencyCurve, self).__init__(inner_factor=inner_factor,
                                                           domestic_hw_curve=domestic_hw_curve,
                                                           hw_fx_curve=hw_fx_curve)
 
 
-class HullWhiteFxRate(HullWhiteFxRateFactorModel):
-
-    pass
