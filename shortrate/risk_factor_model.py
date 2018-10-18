@@ -122,7 +122,7 @@ class RiskFactorModel(StochasticProcess, RiskFactor):
         self.set_risk_factor(e, y)
         return y
 
-    def set_risk_factor(self, factor_date, factor_value=None):
+    def set_risk_factor(self, factor_date=None, factor_value=None):
         r"""
         :param BusinessDate factor_date: sets risk factor state at this date
         :param factor_value: sets risk factor state to this value
@@ -133,7 +133,7 @@ class RiskFactorModel(StochasticProcess, RiskFactor):
         (RiskFactor method)
         """
         self._factor_value = factor_value if factor_value else self.start
-        self._factor_date = factor_date
+        self._factor_date = factor_date if factor_date else self._initial_factor_date
 
 
 class RiskFactorState(State):

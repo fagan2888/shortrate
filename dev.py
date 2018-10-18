@@ -14,10 +14,9 @@ from timewave import Consumer, Engine
 
 
 from shortrate.risk_factor_model import RiskFactorProducer
-from shortrate.market_risk_factor import GBMFxCurve, GeometricBrownianMotionRiskFactorModel, \
-    Price, GeometricBrownianMotionPrice, GeometricBrownianMotionFxRate
+from shortrate.market_risk_factor import GeometricBrownianMotionPrice, GeometricBrownianMotionFxRate
 from shortrate.hullwhite_model import HullWhiteCurve, HullWhiteCurveFactorModel
-from shortrate.hullwhite_multicurrency_model import HullWhiteFxCurve, HullWhiteMultiCurrencyCurve
+from shortrate.hullwhite_multicurrency_model import HullWhiteMultiCurrencyCurve, HullWhiteFxRateFactorModel
 
 from test import MultiCcyHullWhiteSimulationUnitTests, HullWhiteSimulationUnitTests, _try_plot
 
@@ -62,22 +61,23 @@ if 1:
     g = BusinessRange(s, t, '6M')
     d = ZeroRateCurve([s], [0.05])
     f = ZeroRateCurve([s], [0.04])
-    x = FxCurve([s], [.8], domestic_curve=d, foreign_curve=f)
-    r = GBMFxCurve.build(x, volatility=0.2)
+    r = GeometricBrownianMotionFxRate(0.8, s, volatility=0.2)
 
-    print repr(r), repr(r.inner_factor)
+    print r, r.inner_factor
 
-    print r.evolve(1., s, s + '1y', 0.01)
-    print r.get_fx_rate(s + '3y'), r._factor_date
-    print r.evolve(1., s + '1y', s + '5y', 0.1)
-    print r.get_fx_rate(s + '7y'), r._factor_date
+    print r.evolve_risk_factor(1., s, s + '1y', 0.01)
+    print r.value, r._factor_date
+    print r.evolve_risk_factor(1., s + '1y', s + '5y', 0.1)
+    print r.value, r._factor_date
 
-    print repr(r), repr(r.inner_factor)
+    print r, r.inner_factor
+    r.set_risk_factor()
+    print r, r.inner_factor
     print ''
 
     hwd = HullWhiteCurve.build(d, mean_reversion=0.01, volatility=0.03, terminal_date=t)
     hwf = HullWhiteCurveFactorModel(f, mean_reversion=0.01, volatility=0.03, terminal_date=t)
-    hwx = HullWhiteFxCurve.build(r, hwd, hwf)
+    hwx = HullWhiteFxRateFactorModel(r, hwd, hwf)
     hwxf = HullWhiteMultiCurrencyCurve.build(hwf, hwd, hwx)
 
     print repr(hwd), repr(hwd.inner_factor)
