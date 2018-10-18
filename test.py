@@ -16,7 +16,8 @@ from businessdate import BusinessDate, BusinessRange
 from dcf import ZeroRateCurve, DiscountFactorCurve, FxCurve, FxRate
 
 from shortrate.risk_factor_model import RiskFactorProducer, MultiRiskFactorProducer
-from shortrate.market_risk_factor import GeometricBrownianMotionFxRateFactorModel
+from shortrate.market_risk_factor import GeometricBrownianMotionFxRateFactorModel, GaussFlatSpreadZeroRateCurve, \
+    GeometricBrownianMotionFxRate
 from shortrate.hullwhite_model import HullWhiteCurve
 from shortrate.hullwhite_multicurrency_model import HullWhiteMultiCurrencyCurveFactorModel, HullWhiteCurveFactorModel, \
     HullWhiteFxRateFactorModel
@@ -365,6 +366,50 @@ class MultiCcyHullWhiteSimulationUnitTests(TestCase):
             self.plot['multi hull white d corr=%s' % c] = result[0]
             self.plot['multi hull white f corr=%s' % c] = result[1]
             self.plot['multi hull white x corr=%s' % c] = result[2]
+
+
+class GeometricBrownianMotionFxRateTest(TestCase):
+    def setUp(self):
+        self.today = _today
+        self.grid = BusinessRange(_today, _today + '10y', step='3m')
+
+        domestic = ZeroRateCurve([self.today], [0.05])
+        foreign = ZeroRateCurve(_grid, _term)
+        self.model = GeometricBrownianMotionFxRate(1.34, self.today,
+                                                   domestic_curve=domestic, foreign_curve=foreign, volatility=0.2 / 250)
+        self.num_of_paths = 100
+        self.plot = dict()
+
+    def test_single_hull_white_model(self):
+        producer = RiskFactorProducer(self.model)
+        consumer = Consumer((lambda x: self.model.value))
+        result = Engine(producer, consumer).run(self.grid, self.num_of_paths)
+        self.plot['fx rate'] = result
+
+    def tearDown(self):
+        _try_plot(self.plot, self.grid, self.today)
+
+
+class GaussFlatSpreadZeroRateCurveTest(TestCase):
+    def setUp(self):
+        self.today = _today
+        self.grid = BusinessRange(_today, _today + '10b', step='1b')
+        self.term_zero_curve = ZeroRateCurve(_grid, _term)
+        self.model = GaussFlatSpreadZeroRateCurve(_grid, _term, volatility=0.2 / 250)
+        self.num_of_paths = 10
+        self.plot = dict()
+
+    def test_single_hull_white_model(self):
+        producer = RiskFactorProducer(self.model)
+        consumer1y = Consumer((lambda x: self.model.get_zero_rate(self.today + '1y')))
+        consumer5y = Consumer((lambda x: self.model.get_zero_rate(self.today + '5y')))
+        consumer = ConsumerConsumer(consumer1y, consumer5y)
+        result1y, result5y = Engine(producer, consumer).run(self.grid, self.num_of_paths)
+        self.plot['single flat spread 1y rate'] = result1y
+        self.plot['single flat spread 5y rate'] = result5y
+
+    def tearDown(self):
+        _try_plot(self.plot, self.grid, self.today)
 
 
 if __name__ == "__main__":
