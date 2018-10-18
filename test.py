@@ -82,9 +82,9 @@ class HullWhiteModelUnitTests(TestCase):
         self.zero_curve = self.flat_zero_curve
         self.mean_reversion = .1
         self.volatility = .005
-        self.hull_white_curve = HullWhiteCurve.build(self.zero_curve,
-                                                     mean_reversion=self.mean_reversion,
-                                                     volatility=self.volatility)
+        self.hull_white_curve = HullWhiteCurveFactorModel(self.zero_curve,
+                                                          mean_reversion=self.mean_reversion,
+                                                          volatility=self.volatility)
 
         self.plot = dict()
 
@@ -113,9 +113,9 @@ class HullWhiteCurveUnitTests(TestCase):
         self.zero_curve = self.flat_zero_curve
         self.mean_reversion = .1
         self.volatility = .005
-        self.hull_white_curve = HullWhiteCurve.build(self.zero_curve,
-                                                     mean_reversion=self.mean_reversion,
-                                                     volatility=self.volatility)
+        self.hull_white_curve = HullWhiteCurveFactorModel(self.zero_curve,
+                                                          mean_reversion=self.mean_reversion,
+                                                          volatility=self.volatility)
         self.plot = dict()
 
     def tearDown(self):
@@ -190,7 +190,7 @@ class HullWhiteCurveUnitTests(TestCase):
         res.append([self.hull_white_curve.get_zero_rate(self.today, t) for t in self.grid])
         for short_rate in [-.01, .0, .01]:
             for mr in [0.01, 0.02, 0.05, 0.1, 0.2, 0.5]:
-                hwc = HullWhiteCurve.build(self.zero_curve, mean_reversion=mr, volatility=self.volatility)
+                hwc = HullWhiteCurveFactorModel(self.zero_curve, mean_reversion=mr, volatility=self.volatility)
                 hwc.set_risk_factor(self.today + '1y', short_rate)
                 res.append([hwc.get_zero_rate(self.today, t) for t in self.grid])
         self.plot['test_mean_reversion'] = res
@@ -201,7 +201,7 @@ class HullWhiteCurveUnitTests(TestCase):
         res.append([self.hull_white_curve.get_zero_rate(self.today, t) for t in self.grid])
         for short_rate in [-.01, .0, .01]:
             for v in [.005, .01, .05, .1]:
-                hwc = HullWhiteCurve.build(self.zero_curve, mean_reversion=self.mean_reversion, volatility=v)
+                hwc = HullWhiteCurveFactorModel(self.zero_curve, mean_reversion=self.mean_reversion, volatility=v)
                 hwc.set_risk_factor(self.today + '1y', short_rate)
                 res.append([hwc.get_zero_rate(self.today, t) for t in self.grid])
         self.plot['test_volatility'] = res
@@ -218,9 +218,9 @@ class HullWhiteSimulationUnitTests(TestCase):
         self.zero_curve = self.flat_zero_curve
         self.mean_reversion = .1
         self.volatility = .005
-        self.hull_white_curve = HullWhiteCurve.build(self.zero_curve,
-                                                     mean_reversion=self.mean_reversion,
-                                                     volatility=self.volatility)
+        self.hull_white_curve = HullWhiteCurveFactorModel(self.zero_curve,
+                                                          mean_reversion=self.mean_reversion,
+                                                          volatility=self.volatility)
 
         self.df_func = (lambda x: self.hull_white_curve.get_discount_factor(x, self.termday) *
                                   self.hull_white_curve.inner_factor.get_discount_factor(self.today, self.termday) /
@@ -283,7 +283,7 @@ class HullWhiteSimulationUnitTests(TestCase):
         res = list()
         for vol in [.005, .01]:
             for mr in [0.01, 0.1]:
-                hwc = HullWhiteCurve.build(self.zero_curve, mean_reversion=mr, volatility=vol)
+                hwc = HullWhiteCurveFactorModel(self.zero_curve, mean_reversion=mr, volatility=vol)
                 func = (lambda x: hwc.get_discount_factor(x, self.termday) *
                                   hwc.get_discount_factor(self.today, x))
                 func = (lambda x: hwc.get_cash_rate(self.termday - '1y'))
@@ -366,6 +366,24 @@ class MultiCcyHullWhiteSimulationUnitTests(TestCase):
             self.plot['multi hull white d corr=%s' % c] = result[0]
             self.plot['multi hull white f corr=%s' % c] = result[1]
             self.plot['multi hull white x corr=%s' % c] = result[2]
+
+    def test_raise(self):
+        d = HullWhiteCurveFactorModel(ZeroRateCurve())
+        f = HullWhiteCurveFactorModel(ZeroRateCurve())
+        x = HullWhiteFxRateFactorModel(FxRate(), d, f)
+
+        HullWhiteCurveFactorModel(ZeroRateCurve())
+        self.assertRaises(TypeError, HullWhiteCurveFactorModel, FxRate())
+
+        HullWhiteFxRateFactorModel(FxRate(), d, f)
+        self.assertRaises(TypeError, HullWhiteFxRateFactorModel, ZeroRateCurve(), d, f)
+        self.assertRaises(TypeError, HullWhiteFxRateFactorModel, FxRate(), ZeroRateCurve(), f)
+        self.assertRaises(TypeError, HullWhiteFxRateFactorModel, FxRate(), d, ZeroRateCurve())
+
+        HullWhiteMultiCurrencyCurveFactorModel(f, d, x)
+        self.assertRaises(TypeError, HullWhiteMultiCurrencyCurveFactorModel, d, f, FxRate())
+        self.assertRaises(TypeError, HullWhiteMultiCurrencyCurveFactorModel, d, ZeroRateCurve(), x)
+        self.assertRaises(TypeError, HullWhiteMultiCurrencyCurveFactorModel, ZeroRateCurve(), f, x)
 
 
 class GeometricBrownianMotionFxRateTest(TestCase):

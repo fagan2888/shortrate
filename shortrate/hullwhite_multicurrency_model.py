@@ -39,6 +39,17 @@ class HullWhiteMultiCurrencyCurveFactorModel(HullWhiteCurveFactorModel):
         :param HullWhiteFxRateFactorModel hw_fx_curve:
 
         """
+        if not isinstance(inner_factor, HullWhiteCurveFactorModel):
+            names = self.__class__.__name__, HullWhiteCurveFactorModel.__name__, inner_factor.__class__.__name__
+            raise TypeError('%s requires inner_factor of type %s. %s given.' % names)
+
+        if not isinstance(domestic_hw_curve, HullWhiteCurveFactorModel):
+            names = self.__class__.__name__, HullWhiteCurveFactorModel.__name__, domestic_hw_curve.__class__.__name__
+            raise TypeError('%s requires curve argument of type %s. %s given.' % names)
+
+        if not isinstance(hw_fx_curve, HullWhiteFxRateFactorModel):
+            names = self.__class__.__name__, HullWhiteFxRateFactorModel.__name__, hw_fx_curve.__class__.__name__
+            raise TypeError('%s requires fx argument of type %s. %s given.' % names)
 
         super(HullWhiteMultiCurrencyCurveFactorModel, self).__init__(inner_factor,
                                                                      inner_factor.mean_reversion,
@@ -99,7 +110,7 @@ class HullWhiteFxRateFactorModel(FxRate, RiskFactorModel):
                  domestic_correlation=0., foreign_correlation=0., rate_correlation=0., correlation=None):
         """
 
-        :param GeometricBrownianMotionFxRateFactorModel inner_factor:
+        :param GeometricBrownianMotionFxRateFactorModel or FxRate inner_factor: if FxRate, volatility is used
         :param HullWhiteCurveFactorModel domestic_hw_curve:
         :param HullWhiteCurveFactorModel foreign_hw_curve:
         :param float: volatility (optional) Default: either inner_factor.volatility or 0.0
@@ -110,6 +121,18 @@ class HullWhiteFxRateFactorModel(FxRate, RiskFactorModel):
                                                                             Default: explicit given correlations
 
         """
+        if not isinstance(inner_factor, FxRate):
+            names = self.__class__.__name__, FxRate.__name__, inner_factor.__class__.__name__
+            raise TypeError('%s requires inner_factor of type %s. %s given.' % names)
+
+        if not isinstance(domestic_hw_curve, HullWhiteCurveFactorModel):
+            names = self.__class__.__name__, HullWhiteCurveFactorModel.__name__, domestic_hw_curve.__class__.__name__
+            raise TypeError('%s requires curve argument of type %s. %s given.' % names)
+
+        if not isinstance(foreign_hw_curve, HullWhiteCurveFactorModel):
+            names = self.__class__.__name__, HullWhiteCurveFactorModel.__name__, foreign_hw_curve.__class__.__name__
+            raise TypeError('%s requires curve argument of type %s. %s given.' % names)
+
         FxRate.__init__(self, inner_factor.value, inner_factor.origin, inner_factor.day_count)
         RiskFactorModel.__init__(self, inner_factor, start=inner_factor.value)
 

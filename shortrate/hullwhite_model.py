@@ -14,7 +14,7 @@ from math import sqrt, exp
 from scipy import integrate
 
 from businessdate import BusinessDate
-from dcf import ZeroRateCurve, compounding
+from dcf import InterestRateCurve, ZeroRateCurve, compounding
 from timewave import TimeDependentParameter
 
 from risk_factor_model import RiskFactorModel
@@ -44,10 +44,15 @@ class HullWhiteCurveFactorModel(ZeroRateCurve, RiskFactorModel):
         initializes Hull White drift
         """
 
+        if not isinstance(inner_factor, InterestRateCurve):
+            names = self.__class__.__name__, InterestRateCurve.__name__, inner_factor.__class__.__name__
+            raise TypeError('%s requires inner_factor of type %s. %s given.' % names)
+
         RiskFactorModel.__init__(self, inner_factor, 0.0)
 
+        data = list(ZeroRateCurve.get_storage_type(inner_factor, x) for x in inner_factor.domain)
         super(HullWhiteCurveFactorModel, self).__init__(inner_factor.domain,
-                                                        inner_factor(inner_factor.domain),
+                                                        data,
                                                         inner_factor.interpolation,
                                                         inner_factor.origin,
                                                         inner_factor.day_count,
@@ -63,7 +68,7 @@ class HullWhiteCurveFactorModel(ZeroRateCurve, RiskFactorModel):
         self.mean_reversion = float(mean_reversion)
 
         # init terminal_date
-        self.terminal_date = self.domain[-1] if terminal_date is None else terminal_date
+        self.terminal_date = self.domain[-1] if terminal_date is None and self.domain else terminal_date
 
         # init integration caches
         self._pre_calc_diffusion = dict()
@@ -337,11 +342,7 @@ class HullWhiteCurveFactorModel(ZeroRateCurve, RiskFactorModel):
 
 class HullWhiteCurve(HullWhiteCurveFactorModel):
 
-    @classmethod
-    def build(cls, other, mean_reversion=0.0, volatility=0.0, terminal_date=None):
-        return HullWhiteCurveFactorModel(other, mean_reversion, volatility, terminal_date)
-
-    def __init__(self, domain=None, data=None, interpolation=None,
+    def __init__(self, domain=(), data=(), interpolation=None,
                  origin=None, day_count=None, forward_tenor=None,
                  mean_reversion=0.0, volatility=0.0, terminal_date=None):
         inner_factor = ZeroRateCurve(domain, data, interpolation, origin, day_count, forward_tenor)

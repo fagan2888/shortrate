@@ -16,7 +16,7 @@ from timewave import Consumer, Engine
 from shortrate.risk_factor_model import RiskFactorProducer
 from shortrate.market_risk_factor import GeometricBrownianMotionPrice, GeometricBrownianMotionFxRate
 from shortrate.hullwhite_model import HullWhiteCurve, HullWhiteCurveFactorModel
-from shortrate.hullwhite_multicurrency_model import HullWhiteMultiCurrencyCurve, HullWhiteFxRateFactorModel
+from shortrate.hullwhite_multicurrency_model import HullWhiteMultiCurrencyCurveFactorModel, HullWhiteFxRateFactorModel
 
 from test import MultiCcyHullWhiteSimulationUnitTests, HullWhiteSimulationUnitTests, _try_plot
 
@@ -75,10 +75,10 @@ if 1:
     print r, r.inner_factor
     print ''
 
-    hwd = HullWhiteCurve.build(d, mean_reversion=0.01, volatility=0.03, terminal_date=t)
+    hwd = HullWhiteCurve([s], [0.05], mean_reversion=0.01, volatility=0.03, terminal_date=t)
     hwf = HullWhiteCurveFactorModel(f, mean_reversion=0.01, volatility=0.03, terminal_date=t)
     hwx = HullWhiteFxRateFactorModel(r, hwd, hwf)
-    hwxf = HullWhiteMultiCurrencyCurve.build(hwf, hwd, hwx)
+    hwxf = HullWhiteMultiCurrencyCurveFactorModel(hwf, hwd, hwx)
 
     print repr(hwd), repr(hwd.inner_factor)
     print repr(hwf), repr(hwf.inner_factor)
