@@ -13,11 +13,13 @@ from os import getcwd, sep, path, makedirs
 from unittest import TestCase, main
 
 from businessdate import BusinessDate, BusinessRange
-from dcf import ZeroRateCurve, DiscountFactorCurve, FxCurve
+from dcf import ZeroRateCurve, DiscountFactorCurve, FxCurve, FxRate
 
 from shortrate.risk_factor_model import RiskFactorProducer, MultiRiskFactorProducer
+from shortrate.market_risk_factor import GeometricBrownianMotionFxRateFactorModel
 from shortrate.hullwhite_model import HullWhiteCurve
-from shortrate.hullwhite_multicurrency_model import HullWhiteMultiCurrencyCurve, HullWhiteFxCurve, GBMFxCurve
+from shortrate.hullwhite_multicurrency_model import HullWhiteMultiCurrencyCurveFactorModel, HullWhiteCurveFactorModel, \
+    HullWhiteFxRateFactorModel
 
 from timewave import Engine, ConsumerConsumer, Consumer, MultiConsumer, StatisticsConsumer
 
@@ -50,7 +52,7 @@ def _try_plot(plot, grid, today=None):
                 plt.plot(g, l)
             n = float(len(plot[k]))
             t = map(list, zip(*plot[k]))
-            plt.plot(g, [sum(l)/n for l in t], 'k.')
+            plt.plot(g, [sum(l) / n for l in t], 'k.')
             plt.title(k)
             # plt.ylim(0.2, 1.0)
             plt.savefig('.' + sep + 'pdf' + sep + k + '.pdf')
@@ -145,7 +147,7 @@ class HullWhiteCurveUnitTests(TestCase):
             #     'HullWhiteCurve fails at get_cash_rate(d) = get_cash_rate(%s)' % (str(d))
 
             if not self.today == d and not d == self.termday:
-                zr =self.zero_curve.get_zero_rate(self.today, d)
+                zr = self.zero_curve.get_zero_rate(self.today, d)
                 hw = self.hull_white_curve.get_zero_rate(self.today, d)
                 self.assertAlmostEqual(zr, hw)
 
@@ -307,16 +309,14 @@ class MultiCcyHullWhiteSimulationUnitTests(TestCase):
         self.term_zero_curve = ZeroRateCurve(self.grid, _term)
         self.zero_curve = self.flat_zero_curve
         self.fx_curve = FxCurve([self.today], [1.], domestic_curve=self.zero_curve, foreign_curve=self.zero_curve)
+        self.fx_rate = FxRate(1., self.today)
         self.fx_volatility = .3
-        self.gbm_fx_curve = GBMFxCurve.build(self.fx_curve, self.fx_volatility)
+        self.gbm_fx_curve = GeometricBrownianMotionFxRateFactorModel(self.fx_rate, volatility=self.fx_volatility)
         self.mean_reversion = .1
         self.volatility = .005
-        self.hull_white_curve = HullWhiteCurve.build(self.zero_curve,
-                                                     mean_reversion=self.mean_reversion,
-                                                     volatility=self.volatility)
-        self.hull_white_curve_2 = HullWhiteCurve.build(ZeroRateCurve([self.today], [0.03]),
-                                                       mean_reversion=self.mean_reversion*2,
-                                                       volatility=self.volatility*0.5)
+        self.hull_white_curve = HullWhiteCurveFactorModel(self.zero_curve, self.mean_reversion, self.volatility)
+        z = ZeroRateCurve([self.today], [0.03])
+        self.hull_white_curve_2 = HullWhiteCurveFactorModel(z, self.mean_reversion * 2, self.volatility * 0.5)
         self.df_func = (lambda x: self.hull_white_curve.get_discount_factor(x, self.termday) *
                                   self.hull_white_curve.inner_factor.get_discount_factor(self.today, self.termday) /
                                   self.hull_white_curve.inner_factor.get_discount_factor(x, self.termday))
@@ -341,13 +341,14 @@ class MultiCcyHullWhiteSimulationUnitTests(TestCase):
             corr[self.hull_white_curve, self.gbm_fx_curve] = dx
             corr[self.hull_white_curve_2, self.gbm_fx_curve] = fx
             corr[self.hull_white_curve, self.hull_white_curve_2] = df
-            hull_white_fx_curve = HullWhiteFxCurve.build(self.gbm_fx_curve,
-                                                         self.hull_white_curve,
-                                                         self.hull_white_curve_2, None, corr)
+            hull_white_fx_curve = HullWhiteFxRateFactorModel(self.gbm_fx_curve,
+                                                             self.hull_white_curve,
+                                                             self.hull_white_curve_2,
+                                                             correlation=corr)
 
-            hull_white_mc_curve = HullWhiteMultiCurrencyCurve.build(self.hull_white_curve_2,
-                                                                    self.hull_white_curve,
-                                                                    hull_white_fx_curve)
+            hull_white_mc_curve = HullWhiteMultiCurrencyCurveFactorModel(self.hull_white_curve_2,
+                                                                         self.hull_white_curve,
+                                                                         hull_white_fx_curve)
 
             factors = [self.hull_white_curve, hull_white_mc_curve, hull_white_fx_curve]
             # build producer
@@ -361,9 +362,9 @@ class MultiCcyHullWhiteSimulationUnitTests(TestCase):
             # run engine
             result = Engine(producer, consumer).run(self.grid, self.num_of_paths)
             c = repr((dx, fx, df))
-            self.plot['multi hull white d corr=%s' %c] = result[0]
-            self.plot['multi hull white f corr=%s' %c] = result[1]
-            self.plot['multi hull white x corr=%s' %c] = result[2]
+            self.plot['multi hull white d corr=%s' % c] = result[0]
+            self.plot['multi hull white f corr=%s' % c] = result[1]
+            self.plot['multi hull white x corr=%s' % c] = result[2]
 
 
 if __name__ == "__main__":
