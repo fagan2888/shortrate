@@ -8,10 +8,12 @@
 #  Website: https://github.com/pbrisk/shortrate
 #  License: MIT (see LICENSE file)
 
-from businessdate import BusinessDate, BusinessRange
-from dcf import ZeroRateCurve, FxCurve
-from timewave import Consumer, Engine
+from math import exp
 
+from businessdate import BusinessDate, BusinessRange
+from dcf import ZeroRateCurve, continuous_compounding
+from timewave import Consumer, Engine, TransposedConsumer, StatisticsConsumer, ConsumerConsumer
+from putcall import black_scholes, black, forward_black_scholes
 
 from shortrate.risk_factor_model import RiskFactorProducer
 from shortrate.market_risk_factor import GeometricBrownianMotionPrice, GeometricBrownianMotionFxRate
@@ -21,14 +23,31 @@ from shortrate.hullwhite_multicurrency_model import HullWhiteMultiCurrencyCurveF
 from test import MultiCcyHullWhiteSimulationUnitTests, HullWhiteSimulationUnitTests, _try_plot
 
 
-def do_test(m, t):
-
-    c = m(t)
-    c.setUp()
-    getattr(c, t)()
-    c.tearDown()
-
 if 1:
+    num, multi, seed = 10000, 4, 5
+    rate, vol = 0.0, 0.1
+    price, strike = 1., 1.
+    start, end = BusinessDate(), BusinessDate() + '1y'
+
+    process = GeometricBrownianMotionPrice(value=price, origin=start, drift=rate, volatility=vol)
+
+    time = process.day_count(start, end)
+    forward = price / continuous_compounding(rate, time)
+    forward = price * exp((rate + 0.5 * vol ** 2) * time)
+    print 'BS', forward, black_scholes(price, strike, vol, time, True, rate)
+    print 'FB', forward, forward_black_scholes(forward, strike, vol, time, True)
+    print 'BK', forward, black(forward, strike, vol, time, True)
+    c = ConsumerConsumer(TransposedConsumer(), StatisticsConsumer())
+    sample, stat = Engine(RiskFactorProducer(process), c).run(grid=[start, end], seed=seed,
+                                                              num_of_paths=num, num_of_workers=multi)
+
+    avg = (lambda x: sum(x)/len(sample[-1]))
+    print 'MC', avg(sample[-1]), avg(map((lambda x: max(x-strike, 0)), sample[-1]))
+    print ''
+    print stat[-1][-1]
+    # print stat[-1][-1].box
+
+if 0:
     s, t = BusinessDate(), BusinessDate() + '10y'
 
     g = GeometricBrownianMotionPrice(value=1.2, origin=s, volatility=.1)#, start=1.1)
@@ -55,7 +74,7 @@ if 1:
     print g, g.inner_factor
     print ''
 
-if 1:
+if 0:
     s = BusinessDate()
     t = s + '10y'
     g = BusinessRange(s, t, '6M')
@@ -102,5 +121,11 @@ if 1:
     # _try_plot({'test': res}, g)
 
 if 0:
+    def do_test(m, t):
+        c = m(t)
+        c.setUp()
+        getattr(c, t)()
+        c.tearDown()
+
     do_test(MultiCcyHullWhiteSimulationUnitTests, 'test_simulation')
     # do_test(HullWhiteSimulationUnitTests, 'test_multi_simulation')
