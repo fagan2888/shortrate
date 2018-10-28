@@ -25,7 +25,7 @@ class GaussRiskFactorModel(RiskFactorModel, TimeDependentWienerProcess):
     def volatility(self):
         return self._sigma
 
-    def __init__(self, inner_factor, mu=0.0, sigma=0.0, time=1., start=0.0):
+    def __init__(self, inner_factor, mu=0.0, sigma=0.0, time=.0027378507871321013, start=0.0):
         # super(GaussRiskFactorModel, self).__init__()
         RiskFactorModel.__init__(self, inner_factor=inner_factor, start=start)
         TimeDependentWienerProcess.__init__(self, mu=mu, sigma=sigma, time=time, start=start)
