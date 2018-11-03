@@ -19,7 +19,7 @@ from timewave.stochasticconsumer import _Statistics
 class _OptionStatistics(_Statistics):
     _available = 'count', 'mean', 'stdev', 'variance', 'skewness', 'kurtosis', 'median', 'min', 'max', 'strike', 'put', 'call'
 
-    def __init__(self, data, description='', strike='', **expected):
+    def __init__(self, data, description='', strike=None, **expected):
         super(_OptionStatistics, self).__init__(data, description, **expected)
         put = (lambda s, k: sum(map((lambda x: max(k - x, 0)), s)) / float(len(s)))
         call = (lambda s, k: sum(map((lambda x: max(x - k, 0)), s)) / float(len(s)))
