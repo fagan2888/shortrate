@@ -62,6 +62,7 @@ if 1:
     print 'start', price, 'strike', strike, 'time', time,
     print 'rate', rate, 'vol', vol, 'drift', drift
     print ''
+    print '                                 call        put'
     print 'analytical Black Scholes         %0.8f, %0.8f' % bs
     print 'analytical forward Black Scholes %0.8f, %0.8f' % fw
     print 'analytical Black76               %0.8f, %0.8f' % bk
