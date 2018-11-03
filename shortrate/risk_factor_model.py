@@ -13,6 +13,19 @@ from businessdate import BusinessDate
 from dcf import DAY_COUNT
 from timewave import State, QuietConsumer, StochasticProcess, \
     GaussEvolutionFunctionProducer, CorrelatedGaussEvolutionProducer
+from timewave.stochasticconsumer import _Statistics
+
+
+class _OptionStatistics(_Statistics):
+    _available = 'count', 'mean', 'stdev', 'variance', 'skewness', 'kurtosis', 'median', 'min', 'max', 'strike', 'put', 'call'
+
+    def __init__(self, data, description='', strike='', **expected):
+        super(_OptionStatistics, self).__init__(data, description, **expected)
+        put = (lambda s, k: sum(map((lambda x: max(k - x, 0)), s)) / float(len(s)))
+        call = (lambda s, k: sum(map((lambda x: max(x - k, 0)), s)) / float(len(s)))
+        self.strike = self.mean if strike is None else strike
+        self.put = put(self.sample, self.strike)
+        self.call = call(self.sample, self.strike)
 
 
 class RiskFactor(object):

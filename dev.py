@@ -16,7 +16,7 @@ from timewave import Consumer, Engine, TransposedConsumer, StatisticsConsumer
 from timewave.stochasticconsumer import _BootstrapStatistics
 from putcall import black_scholes, black, forward_black_scholes
 
-from shortrate.risk_factor_model import RiskFactorProducer
+from shortrate.risk_factor_model import RiskFactorProducer, _OptionStatistics
 from shortrate.market_risk_factor import GeometricBrownianMotionPrice, GeometricBrownianMotionFxRate
 from shortrate.hullwhite_model import HullWhiteCurve, HullWhiteCurveFactorModel
 from shortrate.hullwhite_multicurrency_model import HullWhiteMultiCurrencyCurveFactorModel, HullWhiteFxRateFactorModel
@@ -24,41 +24,50 @@ from shortrate.hullwhite_multicurrency_model import HullWhiteMultiCurrencyCurveF
 from test import MultiCcyHullWhiteSimulationUnitTests, HullWhiteSimulationUnitTests, _try_plot
 
 if 0:
-    process = GeometricBrownianMotionPrice(value=1., origin=BusinessDate(20181231), drift=0.1, volatility=0.2)
-    Engine(RiskFactorProducer(process), Consumer()).run(grid=[process.origin, process.origin + '1y'],
-                                                        num_of_workers=None, num_of_paths=int(1e5))
+    start, end = BusinessDate(20181231), BusinessDate(20191231)  # , BusinessDate(20200101)
+    rate, vol = 0.05, 0.2
+
+    process = GeometricBrownianMotionPrice(value=1., origin=start, drift=rate - 0.5 * (vol ** 2), volatility=vol)
+    r = Engine(RiskFactorProducer(process), Consumer()).run(grid=[start, end],
+                                                            num_of_workers=None,
+                                                            num_of_paths=int(1e5))
 
 if 1:
     from random import Random
 
-    num, multi, seed = 100000, None, Random().randint(0, 10)
+    num, multi, seed = 10000, None, Random().randint(0, 10)
     rate, vol = 0.05, 0.2
     drift = rate - 0.5 * (vol ** 2)
-    price, strike = 1., 1.05
-    start, end = BusinessDate(20181231), BusinessDate(20191231)  # , BusinessDate(20200101)
+    price, strike = 1., 1.
+    start, end = BusinessDate(), BusinessDate() + '1y'  # , BusinessDate(20200101)
 
     process = GeometricBrownianMotionPrice(value=price, origin=start, drift=drift, volatility=vol,
                                            day_count=BusinessDate.get_act_act)
     time = process.day_count(start, end)  # 0.999315537303
     df = continuous_compounding(rate, time)
 
-    e = Engine(RiskFactorProducer(process), StatisticsConsumer(process=process, description=str(process)))
-    # todo  code _OptionStatistics ?
-    stat = e.run(grid=[start, end], seed=seed, num_of_paths=num)[-1][-1]
-    call = (lambda s, k: sum(map((lambda x: max(x - k, 0)), s)) / num * df)
-    mc = call(stat.sample, strike)
+    sc = StatisticsConsumer(statistics=_OptionStatistics, strike=strike, process=process, description=str(process),
+                            call=forward_black_scholes(price / df, strike, vol, time, True),
+                            put=forward_black_scholes(price / df, strike, vol, time, False))
+    stat = Engine(RiskFactorProducer(process), sc).run(grid=[start, end], num_of_paths=num)[-1][-1]
 
-    bs = black_scholes(price, strike, vol, time, True, rate)
-    bl = black(price / df, strike, vol, time, True)
-    fw = forward_black_scholes(price / df, strike, vol, time, True)
-    print bs, bl * df, fw * df
+    mc = stat.call, stat.put
+    bs = black_scholes(price, strike, vol, time, True, rate) / df, \
+         black_scholes(price, strike, vol, time, False, rate) / df
+    bk = black(price / df, strike, vol, time, True), \
+         black(price / df, strike, vol, time, False)
+    fw = forward_black_scholes(price / df, strike, vol, time, True),\
+         forward_black_scholes(price / df, strike, vol, time, False)
 
-    print 'start', price, 'strike', strike,
+    print 'start', price, 'strike', strike, 'time', time,
     print 'rate', rate, 'vol', vol, 'drift', drift
-    print process, 'time', time
+    print ''
+    print 'analytical Black Scholes         %0.8f, %0.8f' % bs
+    print 'analytical forward Black Scholes %0.8f, %0.8f' % fw
+    print 'analytical Black76               %0.8f, %0.8f' % bk
+    print 'simulation Monte Carlo           %0.8f, %0.8f' % mc
+    print ''
     print stat
-    print 'bs call  :     ', mc, '-', bs, '=', mc - bs, '(', (mc / bs - 1.) * 100, '%)'
-    assert abs((mc / bs) - 1.) < 0.01
 
     if False:
         print ''
