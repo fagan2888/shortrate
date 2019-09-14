@@ -59,7 +59,7 @@ class HullWhiteFxRateFactorModel(FxRate, RiskFactorModel):
             names = self.__class__.__name__, HullWhiteCurveFactorModel.__name__, foreign_hw_curve.__class__.__name__
             raise TypeError('%s requires curve argument of type %s. %s given.' % names)
 
-        FxRate.__init__(self, inner_factor.value, inner_factor.origin, inner_factor.day_count)
+        FxRate.__init__(self, inner_factor.value, inner_factor.origin)
         RiskFactorModel.__init__(self, inner_factor, start=inner_factor.value)
 
         assert self.origin == domestic_hw_curve.origin == foreign_hw_curve.origin
@@ -94,8 +94,8 @@ class HullWhiteFxRateFactorModel(FxRate, RiskFactorModel):
     # integrate drift and diffusion integrals
 
     def _calc_drift_integrals(self, s, e):
-        start = BusinessDate.diff_in_years(self.origin, s)
-        end = BusinessDate.diff_in_years(self.origin, e)
+        start = self.origin.get_year_fraction(s)
+        end = self.origin.get_year_fraction(e)
 
         func = (lambda u:
                 self.foreign_curve.volatility(u) ** 2 +
@@ -108,8 +108,8 @@ class HullWhiteFxRateFactorModel(FxRate, RiskFactorModel):
         return -0.5 * part
 
     def _calc_diffusion_integrals(self, s, e):
-        start = BusinessDate.diff_in_years(self.origin, s)
-        end = BusinessDate.diff_in_years(self.origin, e)
+        start = self.origin.get_year_fraction(s)
+        end = self.origin.get_year_fraction(e)
 
         func = (lambda u: -self.domestic_curve.calc_integral_B(u, end) * self.domestic_curve.volatility(u))
         part_d, err = integrate.quad(func, start, end)
@@ -159,7 +159,7 @@ class HullWhiteFxRate(HullWhiteFxRateFactorModel):
                  domestic_curve=None, foreign_curve=None, volatility=0.0,
                  domestic_correlation=0., foreign_correlation=0., rate_correlation=0., correlation=None):
         origin = BusinessDate() if origin is None else origin
-        inner_factor = FxRate(value, origin, day_count)
+        inner_factor = FxRate(value, origin)
         domestic_curve = HullWhiteCurve([inner_factor.origin], [0.]) if domestic_curve is None else domestic_curve
         foreign_curve = domestic_curve if foreign_curve is None else foreign_curve
         super(HullWhiteFxRate, self).__init__(inner_factor, domestic_curve, foreign_curve, volatility,
@@ -220,7 +220,7 @@ class HullWhiteMultiCurrencyCurveFactorModel(HullWhiteCurveFactorModel):
         if not self._fx_model.foreign_correlation and not self._fx_model.rate_correlation:
             return super(HullWhiteMultiCurrencyCurveFactorModel, self).calc_integral_I2(s, t)
 
-        terminal_date_yf = BusinessDate.diff_in_years(self.origin, self.terminal_date)
+        terminal_date_yf = self.origin.get_year_fraction(self.terminal_date)
 
         # todo could use static version self. calc_integral_B(u, terminal_date_yf, domestic_mean_reversion)
         func1 = (lambda u: self.calc_integral_I1(u, t)

@@ -10,7 +10,7 @@
 
 
 from businessdate import BusinessDate
-from dcf import DAY_COUNT
+from dcf import act_36525
 from timewave import State, QuietConsumer, StochasticProcess, \
     GaussEvolutionFunctionProducer, CorrelatedGaussEvolutionProducer
 from timewave.stochasticconsumer import _Statistics
@@ -81,7 +81,7 @@ class RiskFactorModel(StochasticProcess, RiskFactor):
         """
         super(RiskFactorModel, self).__init__(start=start)
         # method: day_count, function to derive floats from dates and periods, i.e. year fractions
-        self.day_count = DAY_COUNT
+        self.day_count = act_36525
 
         self._initial_factor_date = getattr(inner_factor, 'origin', BusinessDate())
         self._inner_factor = inner_factor

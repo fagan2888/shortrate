@@ -177,7 +177,7 @@ class HullWhiteCurveFactorModel(ZeroRateCurve, RiskFactorModel):
                     B(s,t)I_1(s,t)\int_0^s \sigma^2(u) I_1^2(u,s)\,\mathrm{d}u
 
         """
-        terminal_date_yf = BusinessDate.diff_in_years(self.origin, self.terminal_date)
+        terminal_date_yf = self.origin.get_year_fraction(self.terminal_date)
 
         func1 = (lambda u:
                  self.volatility(u) ** 2 * self.calc_integral_I1(u, t) *
@@ -200,7 +200,7 @@ class HullWhiteCurveFactorModel(ZeroRateCurve, RiskFactorModel):
         method to pre calculate :math:` \int_0^t \sigma(u)^2 I_1(u, t) du` along a grid
 
         """
-        end = BusinessDate.diff_in_years(self.origin, e)
+        end = self.origin.get_year_fraction(e)
         return self.calc_integral_volatility_squared_with_I1(0.0, end)
 
     # integrate drift and diffusion integrals of stochastic process part
@@ -214,8 +214,8 @@ class HullWhiteCurveFactorModel(ZeroRateCurve, RiskFactorModel):
         method to pre calculate drift integrals along `s` to `e` on a grid
 
         """
-        start = BusinessDate.diff_in_years(self.origin, s)
-        end = BusinessDate.diff_in_years(self.origin, e)
+        start = self.origin.get_year_fraction(s)
+        end = self.origin.get_year_fraction(e)
 
         i1 = self.calc_integral_I1(start, end)
         i2 = self.calc_integral_I2(start, end)
@@ -230,8 +230,8 @@ class HullWhiteCurveFactorModel(ZeroRateCurve, RiskFactorModel):
         method to pre calculate diffusion integrals along `s` to `e` on a grid
 
         """
-        start = BusinessDate.diff_in_years(self.origin, s)
-        end = BusinessDate.diff_in_years(self.origin, e)
+        start = self.origin.get_year_fraction(s)
+        end = self.origin.get_year_fraction(e)
 
         var = self.calc_integral_volatility_squared_with_I1_squared(start, end)
         return sqrt(var)
@@ -271,7 +271,7 @@ class HullWhiteCurveFactorModel(ZeroRateCurve, RiskFactorModel):
         """
         self._factor_date = self._initial_factor_date if factor_date is None else factor_date
 
-        self._factor_yf = BusinessDate.diff_in_years(self.origin, factor_date)
+        self._factor_yf = self.origin.get_year_fraction(factor_date)
         self._factor_value = factor_value
 
         if factor_date in self._integral_vol_squared_I1:
@@ -316,11 +316,11 @@ class HullWhiteCurveFactorModel(ZeroRateCurve, RiskFactorModel):
 
         df = self.inner_factor.get_discount_factor(start, stop)
 
-        loc_diff_in_years = BusinessDate.diff_in_years  # for speed opt use pointer
+        loc_diff_in_years = self.origin.get_year_fraction  # for speed opt use pointer
 
         factor_yf = self._factor_yf
-        start_yf = loc_diff_in_years(self.origin, start)
-        end_yf = loc_diff_in_years(self.origin, stop)
+        start_yf = loc_diff_in_years(start)
+        end_yf = loc_diff_in_years(stop)
 
         loc_calc_b = self.calc_integral_B  # for speed opt use pointer
 

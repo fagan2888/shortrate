@@ -1,15 +1,9 @@
 
---------
-Tutorial
---------
-
-.. toctree::
-
 
 First setup basic objects
 =========================
 
-first import modul
+first import module
 
 .. code-block:: python
 

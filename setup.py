@@ -1,45 +1,54 @@
 # -*- coding: utf-8 -*-
 
-#  shortrate
-#  ------------
-#  risk factor model library python style.
+# businessdate
+# ------------
+# Python library for generating business dates for fast date operations
+# and rich functionality.
 #
-#  Author:  pbrisk <pbrisk_at_github@icloud.com>
-#  Copyright: 2016, 2017 Deutsche Postbank AG
-#  Website: https://github.com/pbrisk/shortrate
-#  License: APACHE Version 2 License (see LICENSE file)
+# Author:   sonntagsgesicht, based on a fork of Deutsche Postbank [pbrisk]
+# Version:  0.5, copyright Thursday, 29 August 2019
+# Website:  https://github.com/sonntagsgesicht/businessdate
+# License:  Apache License 2.0 (see LICENSE file)
 
 
 import codecs
+
 try:
-    from setuptools import setup
+    from setuptools import setup, find_packages
 except ImportError:
     from distutils.core import setup
 
+pkg = __import__('shortrate')
 
 setup(
-    name='shortrate',
-    description='risk factor model library python style.',
-    version='0.2',
-    author='Deutsche Postbank AG [pbrisk]',
-    author_email='pbrisk_at_github@icloud.com',
-    url='https://github.com/pbrisk/shortrate',
-    bugtrack_url='https://github.com/pbrisk/shortrate/issues',
-    license='Apache License 2.0',
-    packages=['shortrate'],
-    install_requires=['businessdate','timewave','dcf','scipy'],
-    long_description=codecs.open('README.rst', encoding='utf-8').read(),
+    name=pkg.__name__,
+    description=pkg.__doc__,
+    version=pkg.__version__,
+    author=pkg.__author__,
+    author_email=pkg.__email__,
+    url=pkg.__url__,
+    license=pkg.__license__,
+    packages=(pkg.__name__,),
+    package_data={pkg.__name__: list(pkg.__data__)},
+    scripts=pkg.__scripts__,
+    install_requires=pkg.__dependencies__,
+    dependency_links=pkg.__dependency_links__,
+    long_description='\n'+codecs.open('README.rst', encoding='utf-8').read(),
     platforms='any',
     classifiers=[
-        'Development Status :: 3 - Alpha',
-        'Intended Audience :: Developers',
+        'Development Status :: ' + pkg.__dev_status__,
         'Intended Audience :: Education',
+        'Intended Audience :: Developers',
         'Intended Audience :: Financial and Insurance Industry',
         'License :: OSI Approved :: Apache Software License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
         'Topic :: Education',
         'Topic :: Office/Business',
         'Topic :: Office/Business :: Financial',
@@ -48,6 +57,6 @@ setup(
         'Topic :: Utilities',
         'Topic :: Office/Business :: Scheduling',
         'Topic :: Software Development :: Libraries :: Python Modules',
-        'Topic :: Software Development :: Localization',
     ],
 )
+

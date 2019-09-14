@@ -8,6 +8,7 @@
 #  Website: https://github.com/pbrisk/shortrate
 #  License: MIT (see LICENSE file)
 
+import sys
 from datetime import datetime
 from os import getcwd, sep, path, makedirs
 from unittest import TestCase, main
@@ -15,6 +16,8 @@ from unittest import TestCase, main
 from businessdate import BusinessDate, BusinessRange
 from dcf import ZeroRateCurve, DiscountFactorCurve, FxCurve, FxRate
 from timewave import Engine, ConsumerConsumer, Consumer, MultiConsumer, StatisticsConsumer
+
+sys.path.append('..')
 
 from shortrate.risk_factor_model import RiskFactorProducer, MultiRiskFactorProducer
 from shortrate.market_risk_factor import GeometricBrownianMotionFxRateFactorModel, GeometricBrownianMotionFxRate, \
@@ -45,7 +48,7 @@ def _try_plot(plot, grid, today=None):
         today = grid[0]
     try:
         import matplotlib.pyplot as plt
-        g = [today.diff_in_years(d) for d in grid]
+        g = [today.get_year_fraction(d) for d in grid]
         for k in plot:
             # print 'plot:', k
             for l in plot[k]:
@@ -92,8 +95,8 @@ class HullWhiteModelUnitTests(TestCase):
             _try_plot(self.plot, self.grid, self.today)
 
     def test_integrals(self):
-        s = self.today.diff_in_years(self.today)
-        tau_grid = [self.today.diff_in_years(d) for d in self.grid]
+        s = self.today.get_year_fraction(self.today)
+        tau_grid = [self.today.get_year_fraction(d) for d in self.grid]
         for a in ['calc_integral_B', 'calc_integral_I1', 'calc_integral_I1_squared',
                   'calc_integral_volatility_squared_with_I1', 'calc_integral_volatility_squared_with_I1_squared',
                   'calc_integral_I2']:

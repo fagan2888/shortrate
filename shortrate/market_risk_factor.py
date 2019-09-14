@@ -84,15 +84,15 @@ class GeometricBrownianMotionFxRateFactorModel(FxRate, GeometricBrownianMotionRi
         diff_curve = foreign_curve.cast(ZeroRateCurve) - domestic_curve.cast(ZeroRateCurve)
         domain = diff_curve.domain
         data = list(diff_curve.derivative(d) for d in domain)
-        drift = DateCurve(domain, data, origin=inner_factor.origin, day_count=inner_factor.day_count).to_curve()
+        drift = DateCurve(domain, data, origin=inner_factor.origin, day_count=domestic_curve.day_count).to_curve()
 
-        FxRate.__init__(self, inner_factor.value, inner_factor.origin, inner_factor.day_count)
+        FxRate.__init__(self, inner_factor.value, inner_factor.origin)
         GeometricBrownianMotionRiskFactorModel.__init__(self, inner_factor, drift, volatility, start=inner_factor.value)
 
 
 class GeometricBrownianMotionFxRate(GeometricBrownianMotionFxRateFactorModel):
     def __init__(self, value=1.0, origin=None, day_count=None, domestic_curve=None, foreign_curve=None, volatility=0.0):
-        inner_factor = FxRate(value, origin, day_count)
+        inner_factor = FxRate(value, origin)
         super(GeometricBrownianMotionFxRate, self).__init__(inner_factor, domestic_curve, foreign_curve, volatility)
 
 
