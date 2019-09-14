@@ -17,6 +17,7 @@ from businessdate import BusinessDate, BusinessRange
 from dcf import ZeroRateCurve, DiscountFactorCurve, FxCurve, FxRate
 from timewave import Engine, ConsumerConsumer, Consumer, MultiConsumer, StatisticsConsumer
 
+sys.path.append('.')
 sys.path.append('..')
 
 from shortrate.risk_factor_model import RiskFactorProducer, MultiRiskFactorProducer
