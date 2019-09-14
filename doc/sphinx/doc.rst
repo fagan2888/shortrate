@@ -9,6 +9,8 @@ API Documentation
 Risk Factor Modeling
 ====================
 
+.. currentmodule:: shortrate
+
 .. autosummary::
     :nosignatures:
 
@@ -27,11 +29,12 @@ Risk Factor Modeling
 Market Risk Factors
 ===================
 
+
 .. autosummary::
     :nosignatures:
 
-    market_risk_factor.BrownianZeroRateCurve
-    market_risk_factor.GBMFxCurve
+    shortrate.market_risk_factor.BrownianZeroRateCurve
+    shortrate.market_risk_factor.GBMFxCurve
 
 .. inheritance-diagram:: market_risk_factor
 
@@ -40,6 +43,8 @@ Market Risk Factors
 
 The Hull White Model
 ====================
+
+.. py:currentmodule:: shortrate.hullwhite_model
 
 .. autosummary::
     :nosignatures:
@@ -53,6 +58,8 @@ The Hull White Model
 
 Multi Currency Hull White Model Extension
 =========================================
+
+.. py:currentmodule:: shortrate.hullwhite_multicurrency_model
 
 .. autosummary::
     :nosignatures:

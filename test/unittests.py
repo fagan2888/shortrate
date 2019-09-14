@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 
-#  shortrate
-#  -----------
-#  risk factor model library python style.
-#
-#  Author:  pbrisk <pbrisk_at_github@icloud.com>
-#  Website: https://github.com/pbrisk/shortrate
-#  License: MIT (see LICENSE file)
+# shortrate
+# ---------
+# risk factor model library python style.
+# 
+# Author:   sonntagsgesicht, based on a fork of Deutsche Postbank [pbrisk]
+# Version:  0.3, copyright Saturday, 14 September 2019
+# Website:  https://github.com/sonntagsgesicht/shortrate
+# License:  Apache License 2.0 (see LICENSE file)
+
 
 import sys
 from datetime import datetime
@@ -55,7 +57,7 @@ def _try_plot(plot, grid, today=None):
             for l in plot[k]:
                 plt.plot(g, l)
             n = float(len(plot[k]))
-            t = map(list, zip(*plot[k]))
+            t = list(map(list, list(zip(*plot[k]))))
             plt.plot(g, [sum(l) / n for l in t], 'k.')
             plt.title(k)
             # plt.ylim(0.2, 1.0)
@@ -443,9 +445,9 @@ if __name__ == "__main__":
     print('')
     print('======================================================================')
     print('')
-    print('run %s' % __file__)
-    print('in %s' % getcwd())
-    print('started  at %s' % str(start_time))
+    print(('run %s' % __file__))
+    print(('in %s' % getcwd()))
+    print(('started  at %s' % str(start_time)))
     print('')
     print('----------------------------------------------------------------------')
     print('')
@@ -455,10 +457,10 @@ if __name__ == "__main__":
     print('')
     print('======================================================================')
     print('')
-    print('ran %s' % __file__)
-    print('in %s' % getcwd())
-    print('started  at %s' % str(start_time))
-    print('finished at %s' % str(datetime.now()))
+    print(('ran %s' % __file__))
+    print(('in %s' % getcwd()))
+    print(('started  at %s' % str(start_time)))
+    print(('finished at %s' % str(datetime.now())))
     print('')
     print('----------------------------------------------------------------------')
     print('')
