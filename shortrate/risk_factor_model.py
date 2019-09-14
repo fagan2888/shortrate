@@ -10,8 +10,22 @@
 
 
 from businessdate import BusinessDate
+from dcf import DAY_COUNT
 from timewave import State, QuietConsumer, StochasticProcess, \
     GaussEvolutionFunctionProducer, CorrelatedGaussEvolutionProducer
+from timewave.stochasticconsumer import _Statistics
+
+
+class _OptionStatistics(_Statistics):
+    _available = 'count', 'mean', 'stdev', 'variance', 'skewness', 'kurtosis', 'median', 'min', 'max', 'strike', 'put', 'call'
+
+    def __init__(self, data, description='', strike=None, **expected):
+        super(_OptionStatistics, self).__init__(data, description, **expected)
+        put = (lambda s, k: sum(map((lambda x: max(k - x, 0)), s)) / float(len(s)))
+        call = (lambda s, k: sum(map((lambda x: max(x - k, 0)), s)) / float(len(s)))
+        self.strike = self.mean if strike is None else strike
+        self.put = put(self.sample, self.strike)
+        self.call = call(self.sample, self.strike)
 
 
 class RiskFactor(object):
@@ -53,23 +67,27 @@ class RiskFactor(object):
 
 
 class RiskFactorModel(StochasticProcess, RiskFactor):
-    """RiskFactorModel"""
+    """RiskFactorModel which implements StochasticProcess evolve for timewave engine """
 
-    def __init__(self, inner_factor, start_value=0.0):
+    def __init__(self, inner_factor=None, start=0.0):
         r"""
 
         :param inner_factor: parameter object which is modeled by the risk factor model
         :type  inner_factor: Curve or Volatility or object
-        :param start_value:
-        :type  start_value: float or tuple
+        :param start:
+        :type  start: float or tuple
 
         initialize risk factor model
         """
-        super(RiskFactorModel, self).__init__(start_value)
-        # BusinesDate: origin, i.e. value date  resp. start date, of risk factor model
-        self.origin = inner_factor.origin
+        super(RiskFactorModel, self).__init__(start=start)
+        # method: day_count, function to derive floats from dates and periods, i.e. year fractions
+        self.day_count = DAY_COUNT
+
+        self._initial_factor_date = getattr(inner_factor, 'origin', BusinessDate())
         self._inner_factor = inner_factor
-        self._diffusion_driver = self
+
+        self._factor_value = self.start
+        self._factor_date = self._initial_factor_date
 
     def pre_calculate(self, s, e):
         r"""
@@ -98,7 +116,9 @@ class RiskFactorModel(StochasticProcess, RiskFactor):
 
         evolves process state `x` from `s` to `e` in time depending of standard normal random variable `q`
         """
-        return super(RiskFactorModel, self).evolve(x, self.origin.diff_in_years(s), self.origin.diff_in_years(e), q)
+        s = self.day_count(self._initial_factor_date, s)
+        e = self.day_count(self._initial_factor_date, e)
+        return super(RiskFactorModel, self).evolve(x, s, e, q)
 
     def evolve_risk_factor(self, x, s, e, q):
         r"""
@@ -115,7 +135,7 @@ class RiskFactorModel(StochasticProcess, RiskFactor):
         self.set_risk_factor(e, y)
         return y
 
-    def set_risk_factor(self, factor_date, factor_value=None):
+    def set_risk_factor(self, factor_date=None, factor_value=None):
         r"""
         :param BusinessDate factor_date: sets risk factor state at this date
         :param factor_value: sets risk factor state to this value
@@ -126,7 +146,7 @@ class RiskFactorModel(StochasticProcess, RiskFactor):
         (RiskFactor method)
         """
         self._factor_value = factor_value if factor_value else self.start
-        self._factor_date = factor_date
+        self._factor_date = factor_date if factor_date else self._initial_factor_date
 
 
 class RiskFactorState(State):

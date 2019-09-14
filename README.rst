@@ -28,17 +28,17 @@ Example Usage
     d = ZeroRateCurve([s], [0.05])
     f = ZeroRateCurve([s], [0.04])
     x = FxCurve([s], [.8], domestic_curve=d, foreign_curve=f)
-    r = GBMFxCurve.cast(x, volatility=0.2)
+    r = GBMFxCurve.build(x, volatility=0.2)
 
     print r.evolve(1., s, s + '1y', 0.01)
     print r.get_fx_rate(s + '3y'), r._factor_date
     print r.evolve(1., s + '1y', s + '5y', 0.1)
     print r.get_fx_rate(s + '7y'), r._factor_date
 
-    hwd = HullWhiteCurve.cast(d, mean_reversion=0.01, volatility=0.03, terminal_date=t)
-    hwf = HullWhiteCurve.cast(f, mean_reversion=0.01, volatility=0.03, terminal_date=t)
-    hwx = HullWhiteFxCurve.cast(r, hwd, hwf)
-    hwxf = HullWhiteMultiCurrencyCurve.cast(hwf, hwd, hwx)
+    hwd = HullWhiteCurve.build(d, mean_reversion=0.01, volatility=0.03, terminal_date=t)
+    hwf = HullWhiteCurve.build(f, mean_reversion=0.01, volatility=0.03, terminal_date=t)
+    hwx = HullWhiteFxCurve.build(r, hwd, hwf)
+    hwxf = HullWhiteMultiCurrencyCurve.build(hwf, hwd, hwx)
 
     print hwd.evolve(1., s, s + '1y', 0.01)
     print hwf.evolve(1., s, s + '1y', 0.02)
