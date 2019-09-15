@@ -3,7 +3,7 @@
 # shortrate
 # ---------
 # risk factor model library python style.
-# 
+#
 # Author:   sonntagsgesicht, based on a fork of Deutsche Postbank [pbrisk]
 # Version:  0.3, copyright Saturday, 14 September 2019
 # Website:  https://github.com/sonntagsgesicht/shortrate
@@ -95,8 +95,8 @@ class HullWhiteFxRateFactorModel(FxRate, RiskFactorModel):
     # integrate drift and diffusion integrals
 
     def _calc_drift_integrals(self, s, e):
-        start = self.origin.get_year_fraction(s)
-        end = self.origin.get_year_fraction(e)
+        start = self.day_count(self.origin,s)
+        end = self.day_count(self.origin,e)
 
         func = (lambda u:
                 self.foreign_curve.volatility(u) ** 2 +
@@ -109,8 +109,8 @@ class HullWhiteFxRateFactorModel(FxRate, RiskFactorModel):
         return -0.5 * part
 
     def _calc_diffusion_integrals(self, s, e):
-        start = self.origin.get_year_fraction(s)
-        end = self.origin.get_year_fraction(e)
+        start = self.day_count(self.origin,s)
+        end = self.day_count(self.origin,e)
 
         func = (lambda u: -self.domestic_curve.calc_integral_B(u, end) * self.domestic_curve.volatility(u))
         part_d, err = integrate.quad(func, start, end)
@@ -221,7 +221,7 @@ class HullWhiteMultiCurrencyCurveFactorModel(HullWhiteCurveFactorModel):
         if not self._fx_model.foreign_correlation and not self._fx_model.rate_correlation:
             return super(HullWhiteMultiCurrencyCurveFactorModel, self).calc_integral_I2(s, t)
 
-        terminal_date_yf = self.origin.get_year_fraction(self.terminal_date)
+        terminal_date_yf = self.day_count(self.origin,self.terminal_date)
 
         # todo could use static version self. calc_integral_B(u, terminal_date_yf, domestic_mean_reversion)
         func1 = (lambda u: self.calc_integral_I1(u, t)

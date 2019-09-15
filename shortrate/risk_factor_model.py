@@ -3,7 +3,7 @@
 # shortrate
 # ---------
 # risk factor model library python style.
-# 
+#
 # Author:   sonntagsgesicht, based on a fork of Deutsche Postbank [pbrisk]
 # Version:  0.3, copyright Saturday, 14 September 2019
 # Website:  https://github.com/sonntagsgesicht/shortrate
@@ -11,7 +11,6 @@
 
 
 from businessdate import BusinessDate
-from dcf import act_36525
 from timewave import State, QuietConsumer, StochasticProcess, \
     GaussEvolutionFunctionProducer, CorrelatedGaussEvolutionProducer
 from timewave.stochasticconsumer import _Statistics
@@ -70,6 +69,18 @@ class RiskFactor(object):
 class RiskFactorModel(StochasticProcess, RiskFactor):
     """RiskFactorModel which implements StochasticProcess evolve for timewave engine """
 
+    @staticmethod
+    def _default_day_count(start, end):
+        if hasattr(start, 'diff_in_days'):
+            # duck typing businessdate.BusinessDate.diff_in_days
+            d = start.diff_in_days(end)
+        else:
+            d = end - start
+            if hasattr(d, 'days'):
+                # assume datetime.date or finance.BusinessDate (else days as float)
+                d = d.days
+        return float(d) / 365.25
+
     def __init__(self, inner_factor=None, start=0.0):
         r"""
 
@@ -82,7 +93,7 @@ class RiskFactorModel(StochasticProcess, RiskFactor):
         """
         super(RiskFactorModel, self).__init__(start=start)
         # method: day_count, function to derive floats from dates and periods, i.e. year fractions
-        self.day_count = act_36525
+        self.day_count = self._default_day_count
 
         self._initial_factor_date = getattr(inner_factor, 'origin', BusinessDate())
         self._inner_factor = inner_factor
