@@ -3,7 +3,7 @@
 # shortrate
 # ---------
 # risk factor model library python style.
-# 
+#
 # Author:   sonntagsgesicht, based on a fork of Deutsche Postbank [pbrisk]
 # Version:  0.3, copyright Saturday, 14 September 2019
 # Website:  https://github.com/sonntagsgesicht/shortrate
@@ -59,13 +59,13 @@ class GeometricBrownianMotionPriceFactorModel(Price, GeometricBrownianMotionRisk
         return self._factor_date
 
     def __init__(self, inner_factor, drift=0.0, volatility=0.0):
-        Price.__init__(self, inner_factor.value, inner_factor.origin, inner_factor.day_count)
+        Price.__init__(self, inner_factor.value, inner_factor.origin)
         GeometricBrownianMotionRiskFactorModel.__init__(self, inner_factor, drift, volatility, start=inner_factor.value)
 
 
 class GeometricBrownianMotionPrice(GeometricBrownianMotionPriceFactorModel):
     def __init__(self, value=0.0, origin=None, day_count=None, drift=0.0, volatility=0.0):
-        inner_factor = Price(value, origin, day_count)
+        inner_factor = Price(value, origin)
         super(GeometricBrownianMotionPrice, self).__init__(inner_factor, drift, volatility)
 
 
