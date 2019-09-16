@@ -15,6 +15,12 @@ from datetime import datetime
 from os import getcwd, sep, path, makedirs
 from unittest import TestCase, main
 
+try:
+    import matplotlib
+    matplotlib.use('agg')
+except ImportError:
+    pass
+
 from businessdate import BusinessDate, BusinessRange
 from dcf import ZeroRateCurve, DiscountFactorCurve, FxCurve, FxRate
 from timewave import Engine, ConsumerConsumer, Consumer, MultiConsumer, StatisticsConsumer
