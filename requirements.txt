@@ -1,5 +1,9 @@
 scipy
 git+https://github.com/sonntagsgesicht/businessdate
 git+https://github.com/sonntagsgesicht/dcf
+numpy
+scipy
+matplotlib
+dill
 git+https://github.com/sonntagsgesicht/timewave
 auxilium
