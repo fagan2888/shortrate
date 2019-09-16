@@ -63,7 +63,8 @@ class HullWhiteFxRateFactorModel(FxRate, RiskFactorModel):
         FxRate.__init__(self, inner_factor.value, inner_factor.origin)
         RiskFactorModel.__init__(self, inner_factor, start=inner_factor.value)
 
-        assert self.origin == domestic_hw_curve.origin == foreign_hw_curve.origin
+        if not self.origin == domestic_hw_curve.origin == foreign_hw_curve.origin:
+            raise AssertionError("Origin must coincide for all curves in %s." % self.__class__.__name__)
 
         if isinstance(correlation, dict):
             # todo: check correlation symmetry

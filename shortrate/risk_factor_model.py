@@ -234,7 +234,8 @@ class RiskFactorConsumer(QuietConsumer):
         initialize RiskFactorConsumer
         """
         super(RiskFactorConsumer, self).__init__()
-        assert len(set([c.origin for c in risk_factor_list])) == 1
+        if not len(set([c.origin for c in risk_factor_list])) == 1:
+            raise AssertionError('Origin of risk factors must coincide. ')
         #: BusinessDate: valuation date
         self.start_date = risk_factor_list[0].origin
         self.initial_state = risk_factor_list
