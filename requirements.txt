@@ -1,6 +1,5 @@
-numpy
 scipy
 businessdate
 dcf
 timewave
-dill
+auxilium
