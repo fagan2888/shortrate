@@ -2,11 +2,55 @@
 shortrate
 =========
 
-.. image:: https://img.shields.io/codeship/9088f9c0-4618-0135-c3c1-3602b75f498a/master.svg
-    :target: https://codeship.com//projects/231329
+.. image:: https://img.shields.io/codeship/adb6fa50-ba2a-0137-d9c4-4a1d2f2d4303/master.svg
+    :target: https://codeship.com//projects/364774
 
-.. image:: https://readthedocs.org/projects/shortrate/badge
-    :target: http://shortrate.readthedocs.io
+.. image:: https://travis-ci.org/sonntagsgesicht/shortrate.svg?branch=master
+    :target: https://travis-ci.org/sonntagsgesicht/shortrate
+
+.. image:: https://img.shields.io/readthedocs/shortrate
+   :target: http://shortrate.readthedocs.io
+   :alt: Read the Docs
+
+.. image:: https://img.shields.io/codefactor/grade/github/sonntagsgesicht/shortrate/master
+   :target: https://www.codefactor.io/repository/github/sonntagsgesicht/shortrate
+   :alt: CodeFactor Grade
+
+.. image:: https://img.shields.io/codeclimate/maintainability/sonntagsgesicht/shortrate
+   :target: https://codeclimate.com/github/sonntagsgesicht/shortrate/maintainability
+   :alt: Code Climate maintainability
+
+.. image:: https://img.shields.io/codeclimate/coverage/sonntagsgesicht/shortrate
+   :target: https://codeclimate.com/github/sonntagsgesicht/shortrate/test_coverage
+   :alt: Code Climate Coverage
+
+.. image:: https://img.shields.io/lgtm/grade/python/g/sonntagsgesicht/shortrate.svg
+   :target: https://lgtm.com/projects/g/sonntagsgesicht/shortrate/context:python/
+   :alt: lgtm grade
+
+.. image:: https://img.shields.io/lgtm/alerts/g/sonntagsgesicht/shortrate.svg
+   :target: https://lgtm.com/projects/g/sonntagsgesicht/shortrate/alerts/
+   :alt: total lgtm alerts
+
+.. image:: https://img.shields.io/github/license/sonntagsgesicht/shortrate
+   :target: https://github.com/sonntagsgesicht/shortrate/raw/master/LICENSE
+   :alt: GitHub
+
+.. image:: https://img.shields.io/github/release/sonntagsgesicht/shortrate?label=github
+   :target: https://github.com/sonntagsgesicht/shortrate/releases
+   :alt: GitHub release
+
+.. image:: https://img.shields.io/pypi/v/shortrate
+   :target: https://pypi.org/project/shortrate/
+   :alt: PyPI Version
+
+.. image:: https://img.shields.io/pypi/pyversions/shortrate
+   :target: https://pypi.org/project/shortrate/
+   :alt: PyPI - Python Version
+
+.. image:: https://img.shields.io/pypi/dm/shortrate
+   :target: https://pypi.org/project/shortrate/
+   :alt: PyPI Downloads
 
 risk factor model library python style.
 
