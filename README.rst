@@ -1,12 +1,14 @@
-=========
-shortrate
-=========
+
+Python library *shortrate*
+--------------------------
 
 .. image:: https://img.shields.io/codeship/adb6fa50-ba2a-0137-d9c4-4a1d2f2d4303/master.svg
-    :target: https://codeship.com//projects/364774
+   :target: https://codeship.com//projects/364774
+   :alt: CodeShip
 
 .. image:: https://travis-ci.org/sonntagsgesicht/shortrate.svg?branch=master
-    :target: https://travis-ci.org/sonntagsgesicht/shortrate
+   :target: https://travis-ci.org/sonntagsgesicht/shortrate
+   :alt: Travis ci
 
 .. image:: https://img.shields.io/readthedocs/shortrate
    :target: http://shortrate.readthedocs.io
@@ -20,9 +22,9 @@ shortrate
    :target: https://codeclimate.com/github/sonntagsgesicht/shortrate/maintainability
    :alt: Code Climate maintainability
 
-.. image:: https://img.shields.io/codeclimate/coverage/sonntagsgesicht/shortrate
-   :target: https://codeclimate.com/github/sonntagsgesicht/shortrate/test_coverage
-   :alt: Code Climate Coverage
+.. image:: https://img.shields.io/codecov/c/github/sonntagsgesicht/shortrate
+   :target: https://codecov.io/gh/sonntagsgesicht/shortrate
+   :alt: Codecov
 
 .. image:: https://img.shields.io/lgtm/grade/python/g/sonntagsgesicht/shortrate.svg
    :target: https://lgtm.com/projects/g/sonntagsgesicht/shortrate/context:python/
@@ -52,7 +54,8 @@ shortrate
    :target: https://pypi.org/project/shortrate/
    :alt: PyPI Downloads
 
-risk factor model library python style.
+
+Risk factor model library python style.
 
 
 Example Usage
