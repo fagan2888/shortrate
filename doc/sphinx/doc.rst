@@ -1,4 +1,6 @@
 
+.. module:: shortrate
+
 -----------------
 API Documentation
 -----------------
@@ -9,64 +11,77 @@ API Documentation
 Risk Factor Modeling
 ====================
 
-.. currentmodule:: shortrate
+.. py:currentmodule:: shortrate.risk_factor_model
 
 .. autosummary::
     :nosignatures:
 
-    risk_factor_model.RiskFactor
-    risk_factor_model.RiskFactorModel
-    risk_factor_model.RiskFactorState
-    risk_factor_model.RiskFactorProducer
-    risk_factor_model.MultiRiskFactorProducer
-    risk_factor_model.RiskFactorConsumer
+    RiskFactor
+    RiskFactorModel
+    RiskFactorState
+    RiskFactorProducer
+    MultiRiskFactorProducer
+    RiskFactorConsumer
 
-.. inheritance-diagram:: risk_factor_model
+.. inheritance-diagram:: shortrate.risk_factor_model
 
-.. automodule:: risk_factor_model
+.. automodule:: shortrate.risk_factor_model
 
 
 Market Risk Factors
 ===================
 
+.. py:currentmodule:: shortrate.market_risk_factor
 
 .. autosummary::
     :nosignatures:
 
-    shortrate.market_risk_factor.BrownianZeroRateCurve
-    shortrate.market_risk_factor.GBMFxCurve
+    GaussRiskFactorModel
+    GeometricBrownianMotionRiskFactorModel
+    GeometricBrownianMotionPriceFactorModel
+    GeometricBrownianMotionPrice
+    GeometricBrownianMotionFxRateFactorModel
+    GeometricBrownianMotionFxRate
+    GaussFlatSpreadZeroRateCurveFactorModel
+    GaussFlatSpreadZeroRateCurve
 
-.. inheritance-diagram:: market_risk_factor
+.. inheritance-diagram:: shortrate.market_risk_factor
 
-.. automodule:: market_risk_factor
+.. automodule:: shortrate.market_risk_factor
 
 
 The Hull White Model
 ====================
+
+Single Currency
+---------------
 
 .. py:currentmodule:: shortrate.hullwhite_model
 
 .. autosummary::
     :nosignatures:
 
-    hullwhite_model.HullWhiteCurve
+    HullWhiteCurveFactorModel
+    shortrate.HullWhiteCurve
 
-.. inheritance-diagram:: hullwhite_model
+.. inheritance-diagram:: shortrate.hullwhite_model
 
-.. automodule:: hullwhite_model
+.. automodule:: shortrate.hullwhite_model
 
 
-Multi Currency Hull White Model Extension
-=========================================
+Multi Currency Extension
+------------------------
 
 .. py:currentmodule:: shortrate.hullwhite_multicurrency_model
 
 .. autosummary::
     :nosignatures:
 
-    hullwhite_multicurrency_model.HullWhiteFxCurve
-    hullwhite_multicurrency_model.HullWhiteMultiCurrencyCurve
+    HullWhiteFxRateFactorModel
+    HullWhiteFxRate
+    HullWhiteMultiCurrencyCurveFactorModel
+    HullWhiteMultiCurrencyCurve
 
-.. inheritance-diagram:: hullwhite_multicurrency_model
+.. inheritance-diagram:: shortrate.hullwhite_multicurrency_model
 
-.. automodule:: hullwhite_multicurrency_model
+.. automodule:: shortrate.hullwhite_multicurrency_model

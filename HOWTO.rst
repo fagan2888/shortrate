@@ -11,7 +11,7 @@ first import module
 
 
 
-then set up basic instance
+then set up basic instance |HullWhiteCurve|
 
 .. code-block:: python
 

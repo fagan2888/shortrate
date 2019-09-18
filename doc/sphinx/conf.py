@@ -3,7 +3,7 @@
 # shortrate
 # ---------
 # risk factor model library python style.
-# 
+#
 # Author:   sonntagsgesicht, based on a fork of Deutsche Postbank [pbrisk]
 # Version:  0.3, copyright Wednesday, 18 September 2019
 # Website:  https://github.com/sonntagsgesicht/shortrate
@@ -27,7 +27,7 @@ from auxilium import replacements_from_pkg, replacements, replacements_str
 
 replacements = replacements_from_pkg(replacements, pkg)
 rst_prolog = replacements_str(replacements)
-print(rst_prolog)
+# print(rst_prolog)
 
 # -- General configuration ------------------------------------------------
 

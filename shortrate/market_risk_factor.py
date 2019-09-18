@@ -3,7 +3,7 @@
 # shortrate
 # ---------
 # risk factor model library python style.
-# 
+#
 # Author:   sonntagsgesicht, based on a fork of Deutsche Postbank [pbrisk]
 # Version:  0.3, copyright Wednesday, 18 September 2019
 # Website:  https://github.com/sonntagsgesicht/shortrate
@@ -19,6 +19,7 @@ from timewave import TimeDependentWienerProcess, TimeDependentGeometricBrownianM
 
 
 class GaussRiskFactorModel(RiskFactorModel, TimeDependentWienerProcess):
+    """ risk factor modeled as `timewave.TimeDependentWienerProcess` """
     @property
     def drift(self):
         return self._mu
@@ -45,11 +46,12 @@ class GaussRiskFactorModel(RiskFactorModel, TimeDependentWienerProcess):
 
 
 class GeometricBrownianMotionRiskFactorModel(GaussRiskFactorModel, TimeDependentGeometricBrownianMotion):
+    """ risk factor modeled as `timewave.TimeDependentGeometricBrownianMotion` """
     pass
 
 
 class GeometricBrownianMotionPriceFactorModel(Price, GeometricBrownianMotionRiskFactorModel):
-
+    """ risk factor modeled as |GeometricBrownianMotionRiskFactorModel| """
     @property
     def value(self):
         return self._factor_value
